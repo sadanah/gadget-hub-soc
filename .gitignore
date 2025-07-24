@@ -1,0 +1,77 @@
+# Build results
+bin/
+obj/
+
+# Visual Studio user options
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Visual Studio Code settings
+.vscode/
+
+# Visual Studio temporary files
+*.tmp
+*.temp
+*.log
+*.vspscc
+
+# .NET Framework generated files
+*.cache
+*.pdb
+
+# Visual Studio .vs folder (IDE workspace data)
+.vs/
+
+# Rider IDE files
+.idea/
+
+# Resharper files
+_ReSharper*/
+
+# Publish output
+PublishOutput/
+
+# NuGet Packages
+*.nupkg
+*.snupkg
+# The packages folder can be ignored because of Package Restore
+packages/
+
+# SQL Server files
+*.mdf
+*.ldf
+
+# IIS Express
+IISExpress/
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userprefs
+
+# Web Publish folder
+*.Publish.xml
+
+# JetBrains Rider
+.idea/
+
+# Visual Studio profiler
+*.psess
+*.vsp
+*.vspx
+
+# Files built by Visual Studio Installer Projects
+*.cache
+*.ilk
+*.log
+*.obj
+*.idb
+*.ipdb
+*.iobj
+
+# Others
+_ReSharper*/
+*.DotSettings.user
