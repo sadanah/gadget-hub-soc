@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36127.28 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GadgetHub", "GadgetHub\GadgetHub.csproj", "{C5A5450B-22C4-45B0-909B-3E744E7E39EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GadgetHubService", "GadgetHubService\GadgetHubService.csproj", "{6F938BA7-201E-47B5-85EE-74D5CC1E14FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GadgetHubWeb", "GadgetHubWeb\GadgetHubWeb.csproj", "{025FADE3-A441-4614-9739-8E80627D2FEA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6F938BA7-201E-47B5-85EE-74D5CC1E14FB} = {6F938BA7-201E-47B5-85EE-74D5CC1E14FB}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GadgetHubConsoleHost", "GadgetHubConsoleHost\GadgetHubConsoleHost.csproj", "{208C6E3C-AEF5-433B-849F-99E4E0ED8FD1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GadgetHubWindowsForm", "GadgetHubWindowsForm\GadgetHubWindowsForm.csproj", "{BF3D34C1-413D-413B-B010-98DD0D43FE0E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GadgetHubDataAccess", "GadgetHubDataAccess\GadgetHubDataAccess.csproj", "{C81F705F-991F-4FE6-BF10-2181AA4BB487}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C5A5450B-22C4-45B0-909B-3E744E7E39EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5A5450B-22C4-45B0-909B-3E744E7E39EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5A5450B-22C4-45B0-909B-3E744E7E39EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5A5450B-22C4-45B0-909B-3E744E7E39EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F938BA7-201E-47B5-85EE-74D5CC1E14FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F938BA7-201E-47B5-85EE-74D5CC1E14FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F938BA7-201E-47B5-85EE-74D5CC1E14FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F938BA7-201E-47B5-85EE-74D5CC1E14FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{025FADE3-A441-4614-9739-8E80627D2FEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{025FADE3-A441-4614-9739-8E80627D2FEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{025FADE3-A441-4614-9739-8E80627D2FEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{025FADE3-A441-4614-9739-8E80627D2FEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{208C6E3C-AEF5-433B-849F-99E4E0ED8FD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{208C6E3C-AEF5-433B-849F-99E4E0ED8FD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{208C6E3C-AEF5-433B-849F-99E4E0ED8FD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{208C6E3C-AEF5-433B-849F-99E4E0ED8FD1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF3D34C1-413D-413B-B010-98DD0D43FE0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF3D34C1-413D-413B-B010-98DD0D43FE0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF3D34C1-413D-413B-B010-98DD0D43FE0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF3D34C1-413D-413B-B010-98DD0D43FE0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C81F705F-991F-4FE6-BF10-2181AA4BB487}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C81F705F-991F-4FE6-BF10-2181AA4BB487}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C81F705F-991F-4FE6-BF10-2181AA4BB487}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C81F705F-991F-4FE6-BF10-2181AA4BB487}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0376E0F6-56DB-4291-95AD-133BDC8AFD1B}
+	EndGlobalSection
+EndGlobal
