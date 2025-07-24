@@ -27,8 +27,8 @@ This is the Gadget Hub project — an ASP.NET web application integrated with a 
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/GadgetHub.git
-cd GadgetHub
+git clone https://github.com/sadanah/gadget-hub-soc.git
+cd gadget-hub-soc
 ```
 
 ### 2. Restore NuGet Packages
@@ -97,12 +97,12 @@ VALUES ('testuser', 'testpassword', 'testuser@example.com');
 
 ## License
 
-Specify your project license here.
+Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0)
 
 ---
 
 ## Contact
 
-Your Name — your.email@example.com
+Sadana Herath - sadana.herath@gmail.com
 
-Project repository: https://github.com/yourusername/GadgetHub
+Project repository: https://github.com/sadanah/gadget-hub-soc.git
