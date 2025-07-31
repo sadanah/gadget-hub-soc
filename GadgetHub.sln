@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36127.28 d17.14
+VisualStudioVersion = 17.14.36127.28
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GadgetHub", "GadgetHub\GadgetHub.csproj", "{C5A5450B-22C4-45B0-909B-3E744E7E39EA}"
 EndProject
@@ -17,6 +17,13 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GadgetHubWindowsForm", "GadgetHubWindowsForm\GadgetHubWindowsForm.csproj", "{BF3D34C1-413D-413B-B010-98DD0D43FE0E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GadgetHubDataAccess", "GadgetHubDataAccess\GadgetHubDataAccess.csproj", "{C81F705F-991F-4FE6-BF10-2181AA4BB487}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		CreateDatabaseSqlQuery.sql = CreateDatabaseSqlQuery.sql
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

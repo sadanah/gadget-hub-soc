@@ -1,77 +1,62 @@
-# Build results
+# Build output
 bin/
 obj/
-
-# Visual Studio user options
-*.suo
-*.user
-*.userosscache
-*.sln.docstates
-
-# Visual Studio Code settings
-.vscode/
-
-# Visual Studio temporary files
+*.pdb
 *.tmp
 *.temp
 *.log
-*.vspscc
-
-# .NET Framework generated files
+*.tlog
+*.ilk
+*.idb
+*.ipch
+*.iobj
+*.opendb
 *.cache
-*.pdb
 
-# Visual Studio .vs folder (IDE workspace data)
+# User-specific and IDE files
 .vs/
+.vscode/
+*.suo
+*.user
+*.rsuser
+*.userosscache
+*.sln.docstates
+*.slnLaunch.user
+*.userprefs
 
-# Rider IDE files
+# JetBrains & ReSharper
 .idea/
-
-# Resharper files
 _ReSharper*/
+*.DotSettings.user
 
-# Publish output
-PublishOutput/
-
-# NuGet Packages
+# NuGet & packages
 *.nupkg
 *.snupkg
-# The packages folder can be ignored because of Package Restore
 packages/
 
-# SQL Server files
-*.mdf
-*.ldf
+# Web publish output
+PublishOutput/
+*.Publish.xml
 
 # IIS Express
 IISExpress/
 
-# User-specific files
-*.rsuser
-*.suo
-*.user
-*.userprefs
+# Visual Studio Installer project
+*.obj
+*.log
 
-# Web Publish folder
-*.Publish.xml
+# Service references and WSDL cache
+**/Connected Services/**/configuration*.svcinfo
+**/Connected Services/**/service*.disco
+**/Connected Services/**/*.wsdl
+**/Connected Services/**/*.datasource
+**/Connected Services/**/*.svcmap
 
-# JetBrains Rider
-.idea/
+# SQL Server
+*.ldf
+*.mdf
 
-# Visual Studio profiler
+# Profiler
 *.psess
 *.vsp
 *.vspx
-
-# Files built by Visual Studio Installer Projects
-*.cache
-*.ilk
-*.log
-*.obj
-*.idb
-*.ipdb
-*.iobj
-
-# Others
-_ReSharper*/
-*.DotSettings.user
