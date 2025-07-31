@@ -5,36 +5,47 @@
 <head runat="server">
     <title>Login - Gadget Hub</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
         body {
-            font-family: Arial;
+            font-family: Poppins, Arial, sans-serif;
             background-color: #f0f0f0;
             padding: 50px;
         }
         .login-container {
             background-color: white;
-            padding: 30px;
+            padding: 20px 30px 20px 30px;
             border-radius: 8px;
-            width: 300px;
+            width: 350px;
             margin: 0 auto;
             box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
         }
         .login-container h2 {
             text-align: center;
+            margin-bottom: 20px;
         }
-        .login-container label {
-            display: block;
-            margin-top: 10px;
-        }
-        .login-container input {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-        }
-        .login-container button {
-            margin-top: 15px;
-            width: 100%;
-            padding: 10px;
-        }
+.login-container label {
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.login-container input,
+.login-container button {
+    width: 100%;
+    padding: 10px 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+.login-container input:focus,
+.login-container button:focus {
+    outline: none;
+    border-color: #007BFF;
+}
         .error-message {
             color: red;
             text-align: center;
