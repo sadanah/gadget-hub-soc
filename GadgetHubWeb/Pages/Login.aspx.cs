@@ -16,19 +16,34 @@ namespace GadgetHubWeb.Pages
             string email = txtEmail.Text.Trim();
             string password = txtPassword.Text.Trim();
 
-            GadgetHubService1SoapClient client = new GadgetHubService1SoapClient();
-
-            bool isAuthenticated = client.Login(email, password);
-
-            if (isAuthenticated)
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
             {
-                // Redirect to dashboard or home
-                Response.Redirect("~/Pages/Dashboard.aspx");
+                lblStatus.Text = "Please enter both email and password.";
+                return;
             }
-            else
+
+            try
             {
-                lblStatus.Text = "Invalid email or password.";
+                using (GadgetHubService1SoapClient client = new GadgetHubService1SoapClient())
+                {
+                    bool isAuthenticated = client.Login(email, password);
+
+                    if (isAuthenticated)
+                    {
+                        Session["Email"] = email;
+                        Response.Redirect("~/Pages/Dashboard.aspx");
+                    }
+                    else
+                    {
+                        lblStatus.Text = "Invalid email or password.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                lblStatus.Text = "Service error: " + ex.Message;
             }
         }
+
     }
 }
