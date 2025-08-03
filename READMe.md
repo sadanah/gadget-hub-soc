@@ -1,5 +1,4 @@
 # GadgetHub
-[![Ask DeepWiki](https://devin.ai/assets/askdeepwiki.png)](https://deepwiki.com/sadanah/gadget-hub-soc)
 
 GadgetHub is a demonstration application built using a Service-Oriented Architecture (SOA) with Windows Communication Foundation (WCF). It showcases a basic user registration system for a fictional e-commerce platform, clearly separating the business logic, hosting, and presentation layers.
 
