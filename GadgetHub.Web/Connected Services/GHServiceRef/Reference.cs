@@ -20,6 +20,12 @@ namespace GadgetHub.Web.GHServiceRef {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/RegisterUser", ReplyAction="http://tempuri.org/IGadgetHubService/RegisterUserResponse")]
         System.Threading.Tasks.Task<bool> RegisterUserAsync(string firstName, string lastName, string phoneNumber, string username, string password, string email, string role);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/Login", ReplyAction="http://tempuri.org/IGadgetHubService/LoginResponse")]
+        string Login(string email, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/Login", ReplyAction="http://tempuri.org/IGadgetHubService/LoginResponse")]
+        System.Threading.Tasks.Task<string> LoginAsync(string email, string password);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -55,6 +61,14 @@ namespace GadgetHub.Web.GHServiceRef {
         
         public System.Threading.Tasks.Task<bool> RegisterUserAsync(string firstName, string lastName, string phoneNumber, string username, string password, string email, string role) {
             return base.Channel.RegisterUserAsync(firstName, lastName, phoneNumber, username, password, email, role);
+        }
+        
+        public string Login(string email, string password) {
+            return base.Channel.Login(email, password);
+        }
+        
+        public System.Threading.Tasks.Task<string> LoginAsync(string email, string password) {
+            return base.Channel.LoginAsync(email, password);
         }
     }
 }

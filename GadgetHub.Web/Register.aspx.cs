@@ -13,7 +13,14 @@ namespace GadgetHub.Web
         protected void btnRegister_Click(object sender, EventArgs e)
         {
             GadgetHubServiceClient client = new GadgetHubServiceClient();
-            bool result = client.RegisterUser(txtFirstName.Text, txtLastName.Text, txtPhoneNumber.Text, txtUsername.Text, txtPassword.Text, txtEmail.Text, "customer");
+            bool result = client.RegisterUser(
+                txtFirstName.Text, 
+                txtLastName.Text, 
+                txtPhoneNumber.Text, 
+                txtUsername.Text, 
+                txtPassword.Text, 
+                txtEmail.Text, 
+                "customer");
 
             if (result)
                 lblStatus.Text = "Registration successful!";

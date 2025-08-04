@@ -9,6 +9,9 @@ namespace GadgetHub.Service
     {
         [OperationContract]
         bool RegisterUser(string firstName, string lastName, string phoneNumber, string username, string password, string email, string role);
+
+        [OperationContract]
+        string Login(string email, string password);
     }
 }
 
