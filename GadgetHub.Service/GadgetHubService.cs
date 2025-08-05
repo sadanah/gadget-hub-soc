@@ -1,4 +1,5 @@
 ﻿using System.Data.SqlClient;
+using BCrypt.Net;
 
 namespace GadgetHub.Service
 {
@@ -6,7 +7,9 @@ namespace GadgetHub.Service
     {
         public bool RegisterUser(string firstName, string lastName, string phoneNumber, string username, string password, string email, string role)
         {
-            // Simple DB insert logic (this will be refactored later to DAL)
+            // Hash the password using bcrypt
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
+
             string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\SOC\\GadgetHub\\GadgetHubDB.mdf;Integrated Security=True;Connect Timeout=30;Encrypt=False";
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -16,7 +19,7 @@ namespace GadgetHub.Service
                 cmd.Parameters.AddWithValue("@LastName", lastName);
                 cmd.Parameters.AddWithValue("@PhoneNumber", phoneNumber);
                 cmd.Parameters.AddWithValue("@Username", username);
-                cmd.Parameters.AddWithValue("@Password", password);
+                cmd.Parameters.AddWithValue("@Password", hashedPassword); // Store hashed password
                 cmd.Parameters.AddWithValue("@Email", email);
                 cmd.Parameters.AddWithValue("@Role", role);
 
@@ -28,19 +31,31 @@ namespace GadgetHub.Service
 
         public string Login(string email, string password)
         {
-            // Simple DB select logic (this will be refactored later to DAL)
             string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\SOC\\GadgetHub\\GadgetHubDB.mdf;Integrated Security=True;Connect Timeout=30;Encrypt=False";
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                string query = "SELECT Role FROM Users WHERE Email = @Email AND Password = @Password";
+                string query = "SELECT Password, Role FROM Users WHERE Email = @Email";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Email", email);
-                cmd.Parameters.AddWithValue("@Password", password);
 
                 conn.Open();
-                object result = cmd.ExecuteScalar();
-                return result != null ? result.ToString() : null;
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        string hashedPassword = reader.GetString(0);
+                        string role = reader.GetString(1);
+
+                        // Verify entered password against stored hash
+                        if (BCrypt.Net.BCrypt.Verify(password, hashedPassword))
+                        {
+                            return role; // Password matched
+                        }
+                    }
+                }
             }
+            return null; // Login failed
         }
+
     }
 }
