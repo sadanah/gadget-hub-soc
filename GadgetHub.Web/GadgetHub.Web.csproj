@@ -91,16 +91,17 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CartPage.aspx" />
+    <Content Include="CheckoutPage.aspx" />
     <Content Include="Connected Services\GHServiceRef\GadgetHub.Web.GHServiceRef.Category.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <Content Include="Connected Services\GHServiceRef\GadgetHub.Web.GHServiceRef.ProductDTO.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <Content Include="Connected Services\GHServiceRef\GadgetHub.Web.GHServiceRef.UserDTO.datasource">
+    <Content Include="Connected Services\GHServiceRef\GadgetHub.Web.GHServiceRef.CartItemDTO.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <Content Include="Connected Services\GHServiceRef\GadgetHub.Web.GHServiceRef.CartItemDTO.datasource">
+    <Content Include="Connected Services\GHServiceRef\GadgetHub.Web.GHServiceRef.UserDTO.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <None Include="Connected Services\GHServiceRef\item.disco" />
@@ -113,6 +114,7 @@
     <Content Include="Global.asax" />
     <Content Include="HomePage.aspx" />
     <Content Include="Login.aspx" />
+    <Content Include="OrderSuccess.aspx" />
     <Content Include="Register.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -123,6 +125,13 @@
     </Compile>
     <Compile Include="CartPage.aspx.designer.cs">
       <DependentUpon>CartPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CheckoutPage.aspx.cs">
+      <DependentUpon>CheckoutPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CheckoutPage.aspx.designer.cs">
+      <DependentUpon>CheckoutPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Connected Services\GHServiceRef\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -145,6 +154,13 @@
     </Compile>
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OrderSuccess.aspx.cs">
+      <DependentUpon>OrderSuccess.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OrderSuccess.aspx.designer.cs">
+      <DependentUpon>OrderSuccess.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Register.aspx.cs">

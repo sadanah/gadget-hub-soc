@@ -35,6 +35,9 @@ namespace GadgetHub.Service
         [OperationContract]
         void RemoveCartItem(int userId, int productId);
 
+        [OperationContract]
+        bool PlaceOrder(int userId, string deliveryAddress);
+
     }
 }
 

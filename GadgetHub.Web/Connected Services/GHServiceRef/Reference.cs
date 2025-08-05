@@ -410,6 +410,12 @@ namespace GadgetHub.Web.GHServiceRef {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/RemoveCartItem", ReplyAction="http://tempuri.org/IGadgetHubService/RemoveCartItemResponse")]
         System.Threading.Tasks.Task RemoveCartItemAsync(int userId, int productId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/PlaceOrder", ReplyAction="http://tempuri.org/IGadgetHubService/PlaceOrderResponse")]
+        bool PlaceOrder(int userId, string deliveryAddress);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/PlaceOrder", ReplyAction="http://tempuri.org/IGadgetHubService/PlaceOrderResponse")]
+        System.Threading.Tasks.Task<bool> PlaceOrderAsync(int userId, string deliveryAddress);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -509,6 +515,14 @@ namespace GadgetHub.Web.GHServiceRef {
         
         public System.Threading.Tasks.Task RemoveCartItemAsync(int userId, int productId) {
             return base.Channel.RemoveCartItemAsync(userId, productId);
+        }
+        
+        public bool PlaceOrder(int userId, string deliveryAddress) {
+            return base.Channel.PlaceOrder(userId, deliveryAddress);
+        }
+        
+        public System.Threading.Tasks.Task<bool> PlaceOrderAsync(int userId, string deliveryAddress) {
+            return base.Channel.PlaceOrderAsync(userId, deliveryAddress);
         }
     }
 }

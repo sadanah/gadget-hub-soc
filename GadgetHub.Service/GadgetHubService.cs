@@ -277,5 +277,73 @@ namespace GadgetHub.Service
             }
         }
 
+        public bool PlaceOrder(int userId, string deliveryAddress)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                SqlTransaction transaction = conn.BeginTransaction();
+
+                try
+                {
+                    // 1. Calculate total from cart
+                    string totalQuery = "SELECT SUM(p.Price * c.Qty) FROM Cart c JOIN Product p ON c.ProductId = p.Id WHERE c.UserId = @UserId";
+                    SqlCommand totalCmd = new SqlCommand(totalQuery, conn, transaction);
+                    totalCmd.Parameters.AddWithValue("@UserId", userId);
+
+                    int total = Convert.ToInt32(totalCmd.ExecuteScalar());
+
+                    // 2. Insert Order
+                    string insertOrderQuery = "INSERT INTO [Order] (UserId, Total, DeliveryAddress, Status, CreatedAt) VALUES (@UserId, @Total, @DeliveryAddress, 'Pending', GETDATE()); SELECT SCOPE_IDENTITY();";
+                    SqlCommand orderCmd = new SqlCommand(insertOrderQuery, conn, transaction);
+                    orderCmd.Parameters.AddWithValue("@UserId", userId);
+                    orderCmd.Parameters.AddWithValue("@Total", total);
+                    orderCmd.Parameters.AddWithValue("@DeliveryAddress", deliveryAddress);
+
+                    int orderId = Convert.ToInt32(orderCmd.ExecuteScalar());
+
+                    // 3. Insert Order_Items
+                    string getCartItemsQuery = "SELECT ProductId, Qty FROM Cart WHERE UserId = @UserId";
+                    SqlCommand cartCmd = new SqlCommand(getCartItemsQuery, conn, transaction);
+                    cartCmd.Parameters.AddWithValue("@UserId", userId);
+
+                    SqlDataReader reader = cartCmd.ExecuteReader();
+                    List<Tuple<int, int>> cartItems = new List<Tuple<int, int>>();
+                    while (reader.Read())
+                    {
+                        cartItems.Add(new Tuple<int, int>(
+                            Convert.ToInt32(reader["ProductId"]),
+                            Convert.ToInt32(reader["Qty"])));
+                    }
+                    reader.Close();
+
+                    foreach (var item in cartItems)
+                    {
+                        string insertOrderItemQuery = "INSERT INTO Order_Items (OrderId, ProductId, Qty) VALUES (@OrderId, @ProductId, @Qty)";
+                        SqlCommand orderItemCmd = new SqlCommand(insertOrderItemQuery, conn, transaction);
+                        orderItemCmd.Parameters.AddWithValue("@OrderId", orderId);
+                        orderItemCmd.Parameters.AddWithValue("@ProductId", item.Item1);
+                        orderItemCmd.Parameters.AddWithValue("@Qty", item.Item2);
+
+                        orderItemCmd.ExecuteNonQuery();
+                    }
+
+                    // 4. Clear Cart
+                    string clearCartQuery = "DELETE FROM Cart WHERE UserId = @UserId";
+                    SqlCommand clearCartCmd = new SqlCommand(clearCartQuery, conn, transaction);
+                    clearCartCmd.Parameters.AddWithValue("@UserId", userId);
+                    clearCartCmd.ExecuteNonQuery();
+
+                    transaction.Commit();
+                    return true;
+                }
+                catch
+                {
+                    transaction.Rollback();
+                    return false;
+                }
+            }
+        }
+
     }
 }
