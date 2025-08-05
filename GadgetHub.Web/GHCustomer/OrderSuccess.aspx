@@ -7,6 +7,7 @@
 </head>
 <body>
     <h2>Your order has been placed successfully!</h2>
+    <p>Please await confirmation from distributor. Thank you for shopping with us!</p>
     <a href="HomePage.aspx">Continue Shopping</a>
 </body>
 </html>

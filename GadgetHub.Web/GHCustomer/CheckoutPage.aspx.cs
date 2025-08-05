@@ -55,5 +55,9 @@ namespace GadgetHub.Web
                 }
             }
         }
+        protected void btnContinueShopping_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("HomePage.aspx");
+        }
     }
 }

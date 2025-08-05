@@ -28,7 +28,7 @@ namespace GadgetHub.Web
                 lblStatus.Text = "Login successful!";
 
                 // Redirect to Home Page
-                Response.Redirect("HomePage.aspx");
+                Response.Redirect("GHCustomer/HomePage.aspx");
             }
             else
             {

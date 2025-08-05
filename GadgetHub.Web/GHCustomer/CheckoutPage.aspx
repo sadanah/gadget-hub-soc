@@ -8,7 +8,10 @@
         .order-summary { width: 60%; margin: auto; border: 1px solid #ccc; padding: 20px; }
         .product-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; }
         .total { font-weight: bold; font-size: 1.2em; text-align: right; margin-top: 20px; }
-        .checkout-btn { display: block; margin: 20px auto; padding: 10px 20px; font-size: 1.1em; }
+        checkout-btn,.continue-shopping-btn { margin-top: 20px; color: white; padding: 10px 20px; border: none; cursor: pointer; }
+        .checkout-btn {background: #4CAF50;}
+        .continue-shopping-btn {background: #666;}
+        .button-group {display:flex; flex-direction:row; justify-content:space-between;}
     </style>
 </head>
 <body>
@@ -26,8 +29,11 @@
             <div class="total">
                 Total: LKR <asp:Label ID="lblTotal" runat="server" Text="0"></asp:Label>
             </div>
-            <asp:Button ID="btnPlaceOrder" runat="server" Text="Place Order" CssClass="checkout-btn" OnClick="btnPlaceOrder_Click" />
-        </div>
+            <div class="button-group">
+                <asp:Button ID="btnContinueShopping" runat="server" Text="Continue Shopping" CssClass="continue-shopping-btn" OnClick="btnContinueShopping_Click" />
+                <asp:Button ID="btnPlaceOrder" runat="server" Text="Place Order" CssClass="checkout-btn" OnClick="btnPlaceOrder_Click" />
+            </div>
+         </div>
     </form>
 </body>
 </html>

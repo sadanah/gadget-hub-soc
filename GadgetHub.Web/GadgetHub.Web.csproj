@@ -90,8 +90,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CartPage.aspx" />
-    <Content Include="CheckoutPage.aspx" />
+    <Content Include="GHCustomer\CartPage.aspx" />
+    <Content Include="GHCustomer\CheckoutPage.aspx" />
     <Content Include="Connected Services\GHServiceRef\GadgetHub.Web.GHServiceRef.Category.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
@@ -112,25 +112,25 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <Content Include="Global.asax" />
-    <Content Include="HomePage.aspx" />
+    <Content Include="GHCustomer\HomePage.aspx" />
     <Content Include="Login.aspx" />
-    <Content Include="OrderSuccess.aspx" />
+    <Content Include="GHCustomer\OrderSuccess.aspx" />
     <Content Include="Register.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CartPage.aspx.cs">
+    <Compile Include="GHCustomer\CartPage.aspx.cs">
       <DependentUpon>CartPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="CartPage.aspx.designer.cs">
+    <Compile Include="GHCustomer\CartPage.aspx.designer.cs">
       <DependentUpon>CartPage.aspx</DependentUpon>
     </Compile>
-    <Compile Include="CheckoutPage.aspx.cs">
+    <Compile Include="GHCustomer\CheckoutPage.aspx.cs">
       <DependentUpon>CheckoutPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="CheckoutPage.aspx.designer.cs">
+    <Compile Include="GHCustomer\CheckoutPage.aspx.designer.cs">
       <DependentUpon>CheckoutPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Connected Services\GHServiceRef\Reference.cs">
@@ -141,11 +141,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="HomePage.aspx.cs">
+    <Compile Include="GHCustomer\HomePage.aspx.cs">
       <DependentUpon>HomePage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="HomePage.aspx.designer.cs">
+    <Compile Include="GHCustomer\HomePage.aspx.designer.cs">
       <DependentUpon>HomePage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
@@ -155,11 +155,11 @@
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
-    <Compile Include="OrderSuccess.aspx.cs">
+    <Compile Include="GHCustomer\OrderSuccess.aspx.cs">
       <DependentUpon>OrderSuccess.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="OrderSuccess.aspx.designer.cs">
+    <Compile Include="GHCustomer\OrderSuccess.aspx.designer.cs">
       <DependentUpon>OrderSuccess.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -195,6 +195,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="GHAdmin\" />
+    <Folder Include="GHDistributor\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
