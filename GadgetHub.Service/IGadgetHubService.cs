@@ -1,4 +1,5 @@
-﻿using System.ServiceModel;
+﻿using System.Collections.Generic;
+using System.ServiceModel;
 
 namespace GadgetHub.Service
 {
@@ -11,7 +12,29 @@ namespace GadgetHub.Service
         bool RegisterUser(string firstName, string lastName, string phoneNumber, string username, string password, string email, string role);
 
         [OperationContract]
-        string Login(string email, string password);
+        UserDTO Login(string email, string password);
+
+        [OperationContract]
+        List<Category> GetCategories();
+
+        [OperationContract]
+        List<ProductDTO> GetProducts(string searchTerm, int[] categoryIds);
+
+        [OperationContract]
+        void AddToCart(int userId, int productId, int qty);
+
+        [OperationContract]
+        int GetCartItemCount(int userId);
+
+        [OperationContract]
+        List<CartItemDTO> GetCartItems(int userId);
+
+        [OperationContract]
+        void UpdateCartItemQty(int userId, int productId, int qtyChange);
+
+        [OperationContract]
+        void RemoveCartItem(int userId, int productId);
+
     }
 }
 

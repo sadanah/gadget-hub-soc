@@ -22,6 +22,9 @@
             <!-- Status Label -->
             <asp:Label ID="lblStatus" runat="server" Text="" ForeColor="Red" />
 
+            <asp:Literal runat="server" ID="litRegisterText"></asp:Literal>
+            <asp:HyperLink runat="server" ID="hlRegister" NavigateUrl="~/Register.aspx" Text="Register Now" />
+
         </div>
     </form>
 </body>

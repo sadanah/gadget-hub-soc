@@ -9,7 +9,349 @@
 //------------------------------------------------------------------------------
 
 namespace GadgetHub.Web.GHServiceRef {
+    using System.Runtime.Serialization;
+    using System;
     
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="UserDTO", Namespace="http://schemas.datacontract.org/2004/07/GadgetHub.Service")]
+    [System.SerializableAttribute()]
+    public partial class UserDTO : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string RoleField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Role {
+            get {
+                return this.RoleField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RoleField, value) != true)) {
+                    this.RoleField = value;
+                    this.RaisePropertyChanged("Role");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Category", Namespace="http://schemas.datacontract.org/2004/07/GadgetHub.Service")]
+    [System.SerializableAttribute()]
+    public partial class Category : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ProductDTO", Namespace="http://schemas.datacontract.org/2004/07/GadgetHub.Service")]
+    [System.SerializableAttribute()]
+    public partial class ProductDTO : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int CategoryIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ImageField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int PriceField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int CategoryId {
+            get {
+                return this.CategoryIdField;
+            }
+            set {
+                if ((this.CategoryIdField.Equals(value) != true)) {
+                    this.CategoryIdField = value;
+                    this.RaisePropertyChanged("CategoryId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Image {
+            get {
+                return this.ImageField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ImageField, value) != true)) {
+                    this.ImageField = value;
+                    this.RaisePropertyChanged("Image");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Price {
+            get {
+                return this.PriceField;
+            }
+            set {
+                if ((this.PriceField.Equals(value) != true)) {
+                    this.PriceField = value;
+                    this.RaisePropertyChanged("Price");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CartItemDTO", Namespace="http://schemas.datacontract.org/2004/07/GadgetHub.Service")]
+    [System.SerializableAttribute()]
+    public partial class CartItemDTO : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ImageField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int PriceField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int ProductIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ProductNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int QtyField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Image {
+            get {
+                return this.ImageField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ImageField, value) != true)) {
+                    this.ImageField = value;
+                    this.RaisePropertyChanged("Image");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Price {
+            get {
+                return this.PriceField;
+            }
+            set {
+                if ((this.PriceField.Equals(value) != true)) {
+                    this.PriceField = value;
+                    this.RaisePropertyChanged("Price");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int ProductId {
+            get {
+                return this.ProductIdField;
+            }
+            set {
+                if ((this.ProductIdField.Equals(value) != true)) {
+                    this.ProductIdField = value;
+                    this.RaisePropertyChanged("ProductId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ProductName {
+            get {
+                return this.ProductNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ProductNameField, value) != true)) {
+                    this.ProductNameField = value;
+                    this.RaisePropertyChanged("ProductName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Qty {
+            get {
+                return this.QtyField;
+            }
+            set {
+                if ((this.QtyField.Equals(value) != true)) {
+                    this.QtyField = value;
+                    this.RaisePropertyChanged("Qty");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="GHServiceRef.IGadgetHubService")]
@@ -22,10 +364,52 @@ namespace GadgetHub.Web.GHServiceRef {
         System.Threading.Tasks.Task<bool> RegisterUserAsync(string firstName, string lastName, string phoneNumber, string username, string password, string email, string role);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/Login", ReplyAction="http://tempuri.org/IGadgetHubService/LoginResponse")]
-        string Login(string email, string password);
+        GadgetHub.Web.GHServiceRef.UserDTO Login(string email, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/Login", ReplyAction="http://tempuri.org/IGadgetHubService/LoginResponse")]
-        System.Threading.Tasks.Task<string> LoginAsync(string email, string password);
+        System.Threading.Tasks.Task<GadgetHub.Web.GHServiceRef.UserDTO> LoginAsync(string email, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/GetCategories", ReplyAction="http://tempuri.org/IGadgetHubService/GetCategoriesResponse")]
+        GadgetHub.Web.GHServiceRef.Category[] GetCategories();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/GetCategories", ReplyAction="http://tempuri.org/IGadgetHubService/GetCategoriesResponse")]
+        System.Threading.Tasks.Task<GadgetHub.Web.GHServiceRef.Category[]> GetCategoriesAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/GetProducts", ReplyAction="http://tempuri.org/IGadgetHubService/GetProductsResponse")]
+        GadgetHub.Web.GHServiceRef.ProductDTO[] GetProducts(string searchTerm, int[] categoryIds);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/GetProducts", ReplyAction="http://tempuri.org/IGadgetHubService/GetProductsResponse")]
+        System.Threading.Tasks.Task<GadgetHub.Web.GHServiceRef.ProductDTO[]> GetProductsAsync(string searchTerm, int[] categoryIds);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/AddToCart", ReplyAction="http://tempuri.org/IGadgetHubService/AddToCartResponse")]
+        void AddToCart(int userId, int productId, int qty);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/AddToCart", ReplyAction="http://tempuri.org/IGadgetHubService/AddToCartResponse")]
+        System.Threading.Tasks.Task AddToCartAsync(int userId, int productId, int qty);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/GetCartItemCount", ReplyAction="http://tempuri.org/IGadgetHubService/GetCartItemCountResponse")]
+        int GetCartItemCount(int userId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/GetCartItemCount", ReplyAction="http://tempuri.org/IGadgetHubService/GetCartItemCountResponse")]
+        System.Threading.Tasks.Task<int> GetCartItemCountAsync(int userId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/GetCartItems", ReplyAction="http://tempuri.org/IGadgetHubService/GetCartItemsResponse")]
+        GadgetHub.Web.GHServiceRef.CartItemDTO[] GetCartItems(int userId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/GetCartItems", ReplyAction="http://tempuri.org/IGadgetHubService/GetCartItemsResponse")]
+        System.Threading.Tasks.Task<GadgetHub.Web.GHServiceRef.CartItemDTO[]> GetCartItemsAsync(int userId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/UpdateCartItemQty", ReplyAction="http://tempuri.org/IGadgetHubService/UpdateCartItemQtyResponse")]
+        void UpdateCartItemQty(int userId, int productId, int qtyChange);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/UpdateCartItemQty", ReplyAction="http://tempuri.org/IGadgetHubService/UpdateCartItemQtyResponse")]
+        System.Threading.Tasks.Task UpdateCartItemQtyAsync(int userId, int productId, int qtyChange);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/RemoveCartItem", ReplyAction="http://tempuri.org/IGadgetHubService/RemoveCartItemResponse")]
+        void RemoveCartItem(int userId, int productId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/RemoveCartItem", ReplyAction="http://tempuri.org/IGadgetHubService/RemoveCartItemResponse")]
+        System.Threading.Tasks.Task RemoveCartItemAsync(int userId, int productId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -63,12 +447,68 @@ namespace GadgetHub.Web.GHServiceRef {
             return base.Channel.RegisterUserAsync(firstName, lastName, phoneNumber, username, password, email, role);
         }
         
-        public string Login(string email, string password) {
+        public GadgetHub.Web.GHServiceRef.UserDTO Login(string email, string password) {
             return base.Channel.Login(email, password);
         }
         
-        public System.Threading.Tasks.Task<string> LoginAsync(string email, string password) {
+        public System.Threading.Tasks.Task<GadgetHub.Web.GHServiceRef.UserDTO> LoginAsync(string email, string password) {
             return base.Channel.LoginAsync(email, password);
+        }
+        
+        public GadgetHub.Web.GHServiceRef.Category[] GetCategories() {
+            return base.Channel.GetCategories();
+        }
+        
+        public System.Threading.Tasks.Task<GadgetHub.Web.GHServiceRef.Category[]> GetCategoriesAsync() {
+            return base.Channel.GetCategoriesAsync();
+        }
+        
+        public GadgetHub.Web.GHServiceRef.ProductDTO[] GetProducts(string searchTerm, int[] categoryIds) {
+            return base.Channel.GetProducts(searchTerm, categoryIds);
+        }
+        
+        public System.Threading.Tasks.Task<GadgetHub.Web.GHServiceRef.ProductDTO[]> GetProductsAsync(string searchTerm, int[] categoryIds) {
+            return base.Channel.GetProductsAsync(searchTerm, categoryIds);
+        }
+        
+        public void AddToCart(int userId, int productId, int qty) {
+            base.Channel.AddToCart(userId, productId, qty);
+        }
+        
+        public System.Threading.Tasks.Task AddToCartAsync(int userId, int productId, int qty) {
+            return base.Channel.AddToCartAsync(userId, productId, qty);
+        }
+        
+        public int GetCartItemCount(int userId) {
+            return base.Channel.GetCartItemCount(userId);
+        }
+        
+        public System.Threading.Tasks.Task<int> GetCartItemCountAsync(int userId) {
+            return base.Channel.GetCartItemCountAsync(userId);
+        }
+        
+        public GadgetHub.Web.GHServiceRef.CartItemDTO[] GetCartItems(int userId) {
+            return base.Channel.GetCartItems(userId);
+        }
+        
+        public System.Threading.Tasks.Task<GadgetHub.Web.GHServiceRef.CartItemDTO[]> GetCartItemsAsync(int userId) {
+            return base.Channel.GetCartItemsAsync(userId);
+        }
+        
+        public void UpdateCartItemQty(int userId, int productId, int qtyChange) {
+            base.Channel.UpdateCartItemQty(userId, productId, qtyChange);
+        }
+        
+        public System.Threading.Tasks.Task UpdateCartItemQtyAsync(int userId, int productId, int qtyChange) {
+            return base.Channel.UpdateCartItemQtyAsync(userId, productId, qtyChange);
+        }
+        
+        public void RemoveCartItem(int userId, int productId) {
+            base.Channel.RemoveCartItem(userId, productId);
+        }
+        
+        public System.Threading.Tasks.Task RemoveCartItemAsync(int userId, int productId) {
+            return base.Channel.RemoveCartItemAsync(userId, productId);
         }
     }
 }

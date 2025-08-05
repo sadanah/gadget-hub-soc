@@ -10,21 +10,30 @@ namespace GadgetHub.Web
 {
     public partial class Login : System.Web.UI.Page
     {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            litRegisterText.Text = "Don't have an account? ";
+        }
+
         protected void btnLogin_Click(object sender, EventArgs e)
         {
             GadgetHubServiceClient client = new GadgetHubServiceClient();
-            string userRole = client.Login(
-                txtEmail.Text,
-                txtPassword.Text);
+            var user = client.Login(txtEmail.Text, txtPassword.Text);
 
-            if (userRole=="admin")
-                lblStatus.Text = "Admin Login";
-            else if (userRole=="staff")
-                lblStatus.Text = "Customer Login";
-            else if (userRole=="customer")
-                lblStatus.Text = "Customer Login";
+            if (user != null)
+            {
+                Session["UserId"] = user.Id;
+                Session["Role"] = user.Role;
+
+                lblStatus.Text = "Login successful!";
+
+                // Redirect to Home Page
+                Response.Redirect("HomePage.aspx");
+            }
             else
-                lblStatus.Text = "Login failed! Please check your credentials.";
+            {
+                lblStatus.Text = "Invalid credentials!";
+            }
         }
     }
 }

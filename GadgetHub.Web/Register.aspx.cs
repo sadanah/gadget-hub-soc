@@ -10,6 +10,11 @@ namespace GadgetHub.Web
 {
     public partial class Register : System.Web.UI.Page
     {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            litLoginText.Text = "Already have an account? ";
+        }
+
         protected void btnRegister_Click(object sender, EventArgs e)
         {
             GadgetHubServiceClient client = new GadgetHubServiceClient();

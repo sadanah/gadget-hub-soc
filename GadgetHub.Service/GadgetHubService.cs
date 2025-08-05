@@ -1,16 +1,80 @@
-﻿using System.Data.SqlClient;
-using BCrypt.Net;
+﻿using BCrypt.Net;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Runtime.Serialization;
+using System.Text;
 
 namespace GadgetHub.Service
 {
+    [DataContract]
+    public class UserDTO
+    {
+        [DataMember]
+        public int Id { get; set; }
+
+        [DataMember]
+        public string Role { get; set; }
+    }
+
+    [DataContract]
+    public class Category
+    {
+        [DataMember]
+        public int Id { get; set; }
+
+        [DataMember]
+        public string Name { get; set; }
+    }
+
+    [DataContract]
+    public class ProductDTO
+    {
+        [DataMember]
+        public int Id { get; set; }
+
+        [DataMember]
+        public string Name { get; set; }
+
+        [DataMember]
+        public int Price { get; set; }
+
+        [DataMember]
+        public string Image { get; set; }
+
+        [DataMember]
+        public int CategoryId { get; set; }
+    }
+
+    [DataContract]
+    public class CartItemDTO
+    {
+        [DataMember]
+        public int ProductId { get; set; }
+
+        [DataMember]
+        public string ProductName { get; set; }
+
+        [DataMember]
+        public string Image { get; set; }
+
+        [DataMember]
+        public int Price { get; set; }
+
+        [DataMember]
+        public int Qty { get; set; }
+    }
+
+
     public class GadgetHubService : IGadgetHubService
     {
+        private readonly string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\SOC\\GadgetHub\\GadgetHubDB.mdf;Integrated Security=True;Connect Timeout=30;Encrypt=False";
         public bool RegisterUser(string firstName, string lastName, string phoneNumber, string username, string password, string email, string role)
         {
             // Hash the password using bcrypt
             string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
 
-            string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\SOC\\GadgetHub\\GadgetHubDB.mdf;Integrated Security=True;Connect Timeout=30;Encrypt=False";
+            //string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\SOC\\GadgetHub\\GadgetHubDB.mdf;Integrated Security=True;Connect Timeout=30;Encrypt=False";
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 string query = "INSERT INTO Users (FirstName, LastName, PhoneNumber, Username, Password, Email, Role) VALUES (@FirstName, @LastName, @PhoneNumber, @Username, @Password, @Email, @Role)";
@@ -29,12 +93,11 @@ namespace GadgetHub.Service
             }
         }
 
-        public string Login(string email, string password)
+        public UserDTO Login(string email, string password)
         {
-            string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\SOC\\GadgetHub\\GadgetHubDB.mdf;Integrated Security=True;Connect Timeout=30;Encrypt=False";
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                string query = "SELECT Password, Role FROM Users WHERE Email = @Email";
+                string query = "SELECT Id, Password, Role FROM Users WHERE Email = @Email";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Email", email);
 
@@ -43,18 +106,175 @@ namespace GadgetHub.Service
                 {
                     if (reader.Read())
                     {
-                        string hashedPassword = reader.GetString(0);
-                        string role = reader.GetString(1);
+                        int userId = reader.GetInt32(0);
+                        string hashedPassword = reader.GetString(1);
+                        string role = reader.GetString(2);
 
-                        // Verify entered password against stored hash
                         if (BCrypt.Net.BCrypt.Verify(password, hashedPassword))
                         {
-                            return role; // Password matched
+                            return new UserDTO { Id = userId, Role = role };
                         }
                     }
                 }
             }
-            return null; // Login failed
+            return null;
+        }
+
+        public List<Category> GetCategories()
+        {
+            List<Category> categories = new List<Category>();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = "SELECT Id, Name FROM Category";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    categories.Add(new Category
+                    {
+                        Id = Convert.ToInt32(reader["Id"]),
+                        Name = reader["Name"].ToString()
+                    });
+                }
+            }
+            return categories;
+        }
+
+        public List<ProductDTO> GetProducts(string searchTerm, int[] categoryIds)
+        {
+            List<ProductDTO> products = new List<ProductDTO>();
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                StringBuilder queryBuilder = new StringBuilder("SELECT Id, Name, Price, Image, CategoryId FROM Product WHERE IsActive = 1");
+
+                if (!string.IsNullOrEmpty(searchTerm))
+                {
+                    queryBuilder.Append(" AND Name LIKE @SearchTerm");
+                }
+
+                if (categoryIds != null && categoryIds.Length > 0)
+                {
+                    string ids = string.Join(",", categoryIds);
+                    queryBuilder.Append($" AND CategoryId IN ({ids})");
+                }
+
+                SqlCommand cmd = new SqlCommand(queryBuilder.ToString(), conn);
+
+                if (!string.IsNullOrEmpty(searchTerm))
+                {
+                    cmd.Parameters.AddWithValue("@SearchTerm", "%" + searchTerm + "%");
+                }
+
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    products.Add(new ProductDTO
+                    {
+                        Id = Convert.ToInt32(reader["Id"]),
+                        Name = reader["Name"].ToString(),
+                        Price = Convert.ToInt32(reader["Price"]),
+                        Image = reader["Image"].ToString(),
+                        CategoryId = Convert.ToInt32(reader["CategoryId"])
+                    });
+                }
+            }
+
+            return products;
+        }
+
+        public void AddToCart(int userId, int productId, int qty)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = "IF EXISTS (SELECT 1 FROM Cart WHERE UserId = @UserId AND ProductId = @ProductId) " +
+                               "UPDATE Cart SET Qty = Qty + @Qty WHERE UserId = @UserId AND ProductId = @ProductId " +
+                               "ELSE INSERT INTO Cart (UserId, ProductId, Qty) VALUES (@UserId, @ProductId, @Qty)";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@UserId", userId);
+                cmd.Parameters.AddWithValue("@ProductId", productId);
+                cmd.Parameters.AddWithValue("@Qty", qty);
+
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public int GetCartItemCount(int userId)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = "SELECT ISNULL(SUM(Qty), 0) FROM Cart WHERE UserId = @UserId";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@UserId", userId);
+
+                conn.Open();
+                return Convert.ToInt32(cmd.ExecuteScalar());
+            }
+        }
+
+        public List<CartItemDTO> GetCartItems(int userId)
+        {
+            List<CartItemDTO> cartItems = new List<CartItemDTO>();
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = @"SELECT c.ProductId, p.Name AS ProductName, p.Image, p.Price, c.Qty
+                         FROM Cart c
+                         JOIN Product p ON c.ProductId = p.Id
+                         WHERE c.UserId = @UserId";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@UserId", userId);
+
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    cartItems.Add(new CartItemDTO
+                    {
+                        ProductId = Convert.ToInt32(reader["ProductId"]),
+                        ProductName = reader["ProductName"].ToString(),
+                        Image = reader["Image"].ToString(),
+                        Price = Convert.ToInt32(reader["Price"]),
+                        Qty = Convert.ToInt32(reader["Qty"])
+                    });
+                }
+            }
+
+            return cartItems;
+        }
+
+        public void UpdateCartItemQty(int userId, int productId, int qtyChange)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = @"UPDATE Cart SET Qty = Qty + @QtyChange WHERE UserId = @UserId AND ProductId = @ProductId;
+                         DELETE FROM Cart WHERE UserId = @UserId AND ProductId = @ProductId AND Qty <= 0;";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@UserId", userId);
+                cmd.Parameters.AddWithValue("@ProductId", productId);
+                cmd.Parameters.AddWithValue("@QtyChange", qtyChange);
+
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public void RemoveCartItem(int userId, int productId)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = "DELETE FROM Cart WHERE UserId = @UserId AND ProductId = @ProductId";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@UserId", userId);
+                cmd.Parameters.AddWithValue("@ProductId", productId);
+
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
         }
 
     }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="c022ecbf-c566-4c81-9c1d-3fc20c4c5cff" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="f9a631ce-177a-4529-b26a-7c16ef595a65" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,10 +22,12 @@
     <MetadataSource Address="http://localhost:8733/GadgetHubService/" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="a61be6da-c543-4abd-9743-abec0ec130a5" SourceId="1" SourceUrl="http://localhost:8733/GadgetHubService/?xsd=xsd0" />
-    <MetadataFile FileName="item.disco" MetadataType="Disco" ID="d368b14e-ab96-435c-9379-51f463cf6156" SourceId="1" SourceUrl="http://localhost:8733/GadgetHubService/?disco" />
-    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="5c79c88f-2371-4124-b573-fb92d3d16a3f" SourceId="1" SourceUrl="http://localhost:8733/GadgetHubService/?xsd=xsd1" />
-    <MetadataFile FileName="GadgetHubService.wsdl" MetadataType="Wsdl" ID="88064342-9d36-44d3-8791-6f4e02299a59" SourceId="1" SourceUrl="http://localhost:8733/GadgetHubService/?wsdl" />
+    <MetadataFile FileName="GadgetHubService.wsdl" MetadataType="Wsdl" ID="5ecbd4d3-072d-4968-b7d6-a6756bc912fd" SourceId="1" SourceUrl="http://localhost:8733/GadgetHubService/?wsdl" />
+    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="fec306ef-ff6c-4761-b052-64dd8972561f" SourceId="1" SourceUrl="http://localhost:8733/GadgetHubService/?xsd=xsd1" />
+    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="6011239b-ea35-4df3-942e-d15c4a8c5b22" SourceId="1" SourceUrl="http://localhost:8733/GadgetHubService/?xsd=xsd2" />
+    <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="93f55c19-daef-468a-867b-a663624f53e6" SourceId="1" SourceUrl="http://localhost:8733/GadgetHubService/?xsd=xsd0" />
+    <MetadataFile FileName="item.disco" MetadataType="Disco" ID="7eb387cf-8dc1-4dc5-94a9-c6833d5b0cc7" SourceId="1" SourceUrl="http://localhost:8733/GadgetHubService/?disco" />
+    <MetadataFile FileName="item3.xsd" MetadataType="Schema" ID="286c123a-64b6-4ce8-985d-00893998c5ea" SourceId="1" SourceUrl="http://localhost:8733/GadgetHubService/?xsd=xsd3" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

@@ -34,6 +34,9 @@
             <!-- Status Label -->
             <asp:Label ID="lblStatus" runat="server" Text="" ForeColor="Red" />
 
+            <asp:Literal runat="server" ID="litLoginText"></asp:Literal>
+            <asp:HyperLink runat="server" ID="hlLogin" NavigateUrl="~/Login.aspx" Text="Login" />
+
         </div>
     </form>
 </body>
