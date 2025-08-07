@@ -76,11 +76,9 @@
         <div class="sidebar">
             <a href="UsersSection.aspx" target="contentFrame">Users</a>
             <a href="QuotationsSection.aspx" target="contentFrame">Quotations</a>
-            <!--
-            <a href="Orders.aspx" target="contentFrame">Orders</a>
-            <a href="Products.aspx" target="contentFrame">Products</a>
-            <a href="ContactMessages.aspx" target="contentFrame">Contact Messages</a>
-            -->
+            <a href="OrdersSection.aspx" target="contentFrame">Orders</a>
+            <a href="ProductsSection.aspx" target="contentFrame">Products</a>
+            <a href="ContactsSection.aspx" target="contentFrame">Contact Messages</a>
         </div>
         <div class="content">
             <iframe id="contentFrame" name="contentFrame"></iframe>

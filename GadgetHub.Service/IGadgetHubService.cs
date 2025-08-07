@@ -38,6 +38,13 @@ namespace GadgetHub.Service
         [OperationContract]
         bool PlaceOrder(int userId, string deliveryAddress);
 
+        //Admin Functions
+        [OperationContract]
+        List<UserDTO> GetUsers(string roleFilter, string searchQuery);
+
+        [OperationContract]
+        void ToggleUserStatus(int userId);
+
     }
 }
 

@@ -26,10 +26,25 @@ namespace GadgetHub.Web.GHServiceRef {
         private string EmailField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FirstNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int IdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsActiveField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LastNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PhoneNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string RoleField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UsernameField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -55,6 +70,19 @@ namespace GadgetHub.Web.GHServiceRef {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FirstName {
+            get {
+                return this.FirstNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FirstNameField, value) != true)) {
+                    this.FirstNameField = value;
+                    this.RaisePropertyChanged("FirstName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public int Id {
             get {
                 return this.IdField;
@@ -68,6 +96,45 @@ namespace GadgetHub.Web.GHServiceRef {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsActive {
+            get {
+                return this.IsActiveField;
+            }
+            set {
+                if ((this.IsActiveField.Equals(value) != true)) {
+                    this.IsActiveField = value;
+                    this.RaisePropertyChanged("IsActive");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LastName {
+            get {
+                return this.LastNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LastNameField, value) != true)) {
+                    this.LastNameField = value;
+                    this.RaisePropertyChanged("LastName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PhoneNumber {
+            get {
+                return this.PhoneNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PhoneNumberField, value) != true)) {
+                    this.PhoneNumberField = value;
+                    this.RaisePropertyChanged("PhoneNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string Role {
             get {
                 return this.RoleField;
@@ -76,6 +143,19 @@ namespace GadgetHub.Web.GHServiceRef {
                 if ((object.ReferenceEquals(this.RoleField, value) != true)) {
                     this.RoleField = value;
                     this.RaisePropertyChanged("Role");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Username {
+            get {
+                return this.UsernameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UsernameField, value) != true)) {
+                    this.UsernameField = value;
+                    this.RaisePropertyChanged("Username");
                 }
             }
         }
@@ -432,6 +512,18 @@ namespace GadgetHub.Web.GHServiceRef {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/PlaceOrder", ReplyAction="http://tempuri.org/IGadgetHubService/PlaceOrderResponse")]
         System.Threading.Tasks.Task<bool> PlaceOrderAsync(int userId, string deliveryAddress);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/GetUsers", ReplyAction="http://tempuri.org/IGadgetHubService/GetUsersResponse")]
+        GadgetHub.Web.GHServiceRef.UserDTO[] GetUsers(string roleFilter, string searchQuery);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/GetUsers", ReplyAction="http://tempuri.org/IGadgetHubService/GetUsersResponse")]
+        System.Threading.Tasks.Task<GadgetHub.Web.GHServiceRef.UserDTO[]> GetUsersAsync(string roleFilter, string searchQuery);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/ToggleUserStatus", ReplyAction="http://tempuri.org/IGadgetHubService/ToggleUserStatusResponse")]
+        void ToggleUserStatus(int userId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/ToggleUserStatus", ReplyAction="http://tempuri.org/IGadgetHubService/ToggleUserStatusResponse")]
+        System.Threading.Tasks.Task ToggleUserStatusAsync(int userId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -539,6 +631,22 @@ namespace GadgetHub.Web.GHServiceRef {
         
         public System.Threading.Tasks.Task<bool> PlaceOrderAsync(int userId, string deliveryAddress) {
             return base.Channel.PlaceOrderAsync(userId, deliveryAddress);
+        }
+        
+        public GadgetHub.Web.GHServiceRef.UserDTO[] GetUsers(string roleFilter, string searchQuery) {
+            return base.Channel.GetUsers(roleFilter, searchQuery);
+        }
+        
+        public System.Threading.Tasks.Task<GadgetHub.Web.GHServiceRef.UserDTO[]> GetUsersAsync(string roleFilter, string searchQuery) {
+            return base.Channel.GetUsersAsync(roleFilter, searchQuery);
+        }
+        
+        public void ToggleUserStatus(int userId) {
+            base.Channel.ToggleUserStatus(userId);
+        }
+        
+        public System.Threading.Tasks.Task ToggleUserStatusAsync(int userId) {
+            return base.Channel.ToggleUserStatusAsync(userId);
         }
     }
 }
