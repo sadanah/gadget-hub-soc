@@ -12,12 +12,20 @@ namespace GadgetHub.Service
     {
         [DataMember]
         public int Id { get; set; }
-
         [DataMember]
-        public string Role { get; set; }
-
+        public string FirstName { get; set; }
+        [DataMember]
+        public string LastName { get; set; }
+        [DataMember]
+        public string PhoneNumber { get; set; }
+        [DataMember]
+        public string Username { get; set; }
         [DataMember]
         public string Email { get; set; }
+        [DataMember]
+        public string Role { get; set; }
+        [DataMember]
+        public bool IsActive { get; set; }  // Add this if you plan to manage activation
     }
 
     [DataContract]
@@ -351,6 +359,82 @@ namespace GadgetHub.Service
                     transaction.Rollback();
                     return false;
                 }
+            }
+        }
+
+        //Admin Functions
+        public List<UserDTO> GetUsers(string roleFilter = null, string searchQuery = null)
+        {
+            List<UserDTO> users = new List<UserDTO>();
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = "SELECT Id, FirstName, LastName, PhoneNumber, Username, Email, Role, IsActive FROM Users WHERE 1=1";
+
+                if (!string.IsNullOrEmpty(roleFilter))
+                    query += " AND Role = @Role";
+
+                if (!string.IsNullOrEmpty(searchQuery))
+                {
+                    query += @" AND (
+                FirstName LIKE @Search OR
+                LastName LIKE @Search OR
+                Username LIKE @Search OR
+                Email LIKE @Search OR
+                CAST(Id AS VARCHAR) LIKE @Search
+            )";
+                }
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                if (!string.IsNullOrEmpty(roleFilter))
+                    cmd.Parameters.AddWithValue("@Role", roleFilter);
+
+                if (!string.IsNullOrEmpty(searchQuery))
+                    cmd.Parameters.AddWithValue("@Search", $"%{searchQuery}%");
+
+                conn.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        users.Add(new UserDTO
+                        {
+                            Id = reader.GetInt32(0),
+                            FirstName = reader.GetString(1),
+                            LastName = reader.GetString(2),
+                            PhoneNumber = reader.GetString(3),
+                            Username = reader.GetString(4),
+                            Email = reader.GetString(5),
+                            Role = reader.GetString(6),
+                            IsActive = reader.GetBoolean(7)
+                        });
+                    }
+                }
+            }
+
+            return users;
+        }
+
+        public void ToggleUserStatus(int userId)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                // Get current status
+                string getQuery = "SELECT IsActive FROM Users WHERE Id = @Id";
+                SqlCommand getCmd = new SqlCommand(getQuery, conn);
+                getCmd.Parameters.AddWithValue("@Id", userId);
+
+                bool currentStatus = (bool)getCmd.ExecuteScalar();
+
+                // Toggle status
+                string updateQuery = "UPDATE Users SET IsActive = @NewStatus WHERE Id = @Id";
+                SqlCommand updateCmd = new SqlCommand(updateQuery, conn);
+                updateCmd.Parameters.AddWithValue("@Id", userId);
+                updateCmd.Parameters.AddWithValue("@NewStatus", !currentStatus);
+
+                updateCmd.ExecuteNonQuery();
             }
         }
 
