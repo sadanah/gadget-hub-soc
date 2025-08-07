@@ -20,6 +20,14 @@ namespace GadgetHub.Host
                 Console.ReadLine();
                 host.Close();
             }
+            //using (ServiceHost host = new ServiceHost(typeof(LoginService)))
+            //{
+            //    //host.Open();
+            //    Console.WriteLine("Service is running at http://localhost:8733/LoginService/");
+            //    Console.WriteLine("Press Enter to terminate...");
+            //    Console.ReadLine();
+            //    host.Close();
+            //}
         }
     }
 }

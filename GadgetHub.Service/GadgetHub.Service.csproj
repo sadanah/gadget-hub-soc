@@ -64,6 +64,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IGadgetHubService.cs" />
+    <Compile Include="ILoginService.cs" />
+    <Compile Include="LoginService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GadgetHubService.cs" />
   </ItemGroup>

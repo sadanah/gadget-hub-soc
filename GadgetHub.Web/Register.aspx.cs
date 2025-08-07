@@ -32,5 +32,6 @@ namespace GadgetHub.Web
             else
                 lblStatus.Text = "Registration failed!";
         }
+
     }
 }
