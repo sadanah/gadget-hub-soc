@@ -110,6 +110,12 @@
     <Content Include="Connected Services\GHServiceRef\GadgetHub.Web.GHServiceRef.UserDTO.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <Content Include="Connected Services\GHServiceRef\GadgetHub.Web.GHServiceRef.QuotationDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GHServiceRef\GadgetHub.Web.GHServiceRef.DistributorDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Connected Services\GHServiceRef\item.disco" />
     <None Include="Connected Services\GHServiceRef\configuration91.svcinfo" />
     <None Include="Connected Services\GHServiceRef\configuration.svcinfo" />

@@ -76,6 +76,64 @@ namespace GadgetHub.Service
         public int Qty { get; set; }
     }
 
+    // QuotationDTO.cs
+    [DataContract]
+    public class QuotationDTO
+    {
+        [DataMember]
+        public int QuotationId { get; set; }
+
+        [DataMember]
+        public int DistributorId { get; set; }
+        
+        [DataMember]
+        public string DistributorEmail { get; set; }
+
+        [DataMember]
+        public DateTime CreatedAt { get; set; }
+
+        [DataMember]
+        public List<QuotationItemDTO> Items { get; set; }
+    }
+
+    // QuotationItemDTO.cs
+    [DataContract]
+    public class QuotationItemDTO
+    {
+        [DataMember]
+        public int ProductId { get; set; }
+
+        [DataMember]
+        public string ProductName { get; set; }
+
+        [DataMember]
+        public int Quantity { get; set; }
+
+        [DataMember]
+        public decimal Price { get; set; }  // price per item
+
+        [DataMember]
+        public decimal Total => Price * Quantity;  // optional, for convenience
+    }
+
+    // DistributorDTO.cs
+    [DataContract]
+    public class DistributorDTO
+    {
+        [DataMember]
+        public int DistributorId { get; set; }
+
+        [DataMember]
+        public string DistributorName { get; set; }
+
+        [DataMember]
+        public string DistributorEmail { get; set; }
+
+        [DataMember]
+        public string PhoneNumber { get; set; }
+    }
+
+
 
     public class GadgetHubService : IGadgetHubService
     {
@@ -436,6 +494,157 @@ namespace GadgetHub.Service
 
                 updateCmd.ExecuteNonQuery();
             }
+        }
+
+        public List<ProductDTO> GetAllProducts()
+        {
+            List<ProductDTO> products = new List<ProductDTO>();
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "SELECT Id, Name, Price, Image, CategoryId FROM Products";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        products.Add(new ProductDTO
+                        {
+                            Id = reader.GetInt32(0),
+                            Name = reader.GetString(1),
+                            Price = reader.GetInt32(2),
+                            Image = reader.GetString(3),
+                            CategoryId = reader.GetInt32(4)
+                        });
+                    }
+                }
+            }
+
+            return products;
+        }
+
+        public List<DistributorDTO> GetAllDistributors()
+        {
+            List<DistributorDTO> distributors = new List<DistributorDTO>();
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "SELECT DistributorId, DistributorName, DistributorEmail, PhoneNumber FROM Distributors";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        distributors.Add(new DistributorDTO
+                        {
+                            DistributorId = reader.GetInt32(0),
+                            DistributorName = reader.GetString(1),
+                            DistributorEmail = reader.GetString(2),
+                            PhoneNumber = reader.GetString(3)
+                        });
+                    }
+                }
+            }
+
+            return distributors;
+        }
+
+        public bool CreateQuotation(int distributorId, QuotationItemDTO[] items)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                SqlTransaction transaction = conn.BeginTransaction();
+
+                try
+                {
+                    // Insert into Quotations
+                    string insertQuotation = "INSERT INTO Quotations (DistributorId, CreatedAt) OUTPUT INSERTED.QuotationId VALUES (@DistributorId, @CreatedAt)";
+                    SqlCommand cmdQuotation = new SqlCommand(insertQuotation, conn, transaction);
+                    cmdQuotation.Parameters.AddWithValue("@DistributorId", distributorId);
+                    cmdQuotation.Parameters.AddWithValue("@CreatedAt", DateTime.Now);
+                    int quotationId = (int)cmdQuotation.ExecuteScalar();
+
+                    // Insert each item
+                    foreach (var item in items)
+                    {
+                        string insertItem = @"INSERT INTO QuotationItems (QuotationId, ProductId, Quantity, Price) 
+                                      VALUES (@QuotationId, @ProductId, @Quantity, @Price)";
+                        SqlCommand cmdItem = new SqlCommand(insertItem, conn, transaction);
+                        cmdItem.Parameters.AddWithValue("@QuotationId", quotationId);
+                        cmdItem.Parameters.AddWithValue("@ProductId", item.ProductId);
+                        cmdItem.Parameters.AddWithValue("@Quantity", item.Quantity);
+                        cmdItem.Parameters.AddWithValue("@Price", item.Price);
+                        cmdItem.ExecuteNonQuery();
+                    }
+
+                    transaction.Commit();
+                    return true;
+                }
+                catch
+                {
+                    transaction.Rollback();
+                    return false;
+                }
+            }
+        }
+
+        public List<QuotationDTO> GetAllQuotations()
+        {
+            List<QuotationDTO> quotations = new List<QuotationDTO>();
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                // Get quotation headers
+                string qQuery = "SELECT QuotationId, DistributorId, CreatedAt FROM Quotations";
+                using (SqlCommand cmd = new SqlCommand(qQuery, conn))
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        quotations.Add(new QuotationDTO
+                        {
+                            QuotationId = reader.GetInt32(0),
+                            DistributorId = reader.GetInt32(1),
+                            CreatedAt = reader.GetDateTime(2),
+                            Items = new List<QuotationItemDTO>()  // Load separately below
+                        });
+                    }
+                }
+
+                // Get quotation items
+                foreach (var quote in quotations)
+                {
+                    string iQuery = @"SELECT qi.ProductId, p.Name, qi.Quantity, qi.Price 
+                              FROM QuotationItems qi 
+                              JOIN Products p ON qi.ProductId = p.Id
+                              WHERE qi.QuotationId = @QuotationId";
+
+                    using (SqlCommand cmd = new SqlCommand(iQuery, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@QuotationId", quote.QuotationId);
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                quote.Items.Add(new QuotationItemDTO
+                                {
+                                    ProductId = reader.GetInt32(0),
+                                    ProductName = reader.GetString(1),
+                                    Quantity = reader.GetInt32(2),
+                                    Price = reader.GetDecimal(3)
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+
+            return quotations;
         }
 
     }
