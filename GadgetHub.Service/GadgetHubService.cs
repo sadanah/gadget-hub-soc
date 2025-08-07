@@ -15,6 +15,9 @@ namespace GadgetHub.Service
 
         [DataMember]
         public string Role { get; set; }
+
+        [DataMember]
+        public string Email { get; set; }
     }
 
     [DataContract]
@@ -97,7 +100,7 @@ namespace GadgetHub.Service
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                string query = "SELECT Id, Password, Role FROM Users WHERE Email = @Email";
+                string query = "SELECT Id, Email, Password, Role FROM Users WHERE Email = @Email";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Email", email);
 
@@ -107,12 +110,18 @@ namespace GadgetHub.Service
                     if (reader.Read())
                     {
                         int userId = reader.GetInt32(0);
-                        string hashedPassword = reader.GetString(1);
-                        string role = reader.GetString(2);
+                        string userEmail = reader.GetString(1);
+                        string hashedPassword = reader.GetString(2);
+                        string role = reader.GetString(3);
 
                         if (BCrypt.Net.BCrypt.Verify(password, hashedPassword))
                         {
-                            return new UserDTO { Id = userId, Role = role };
+                            return new UserDTO
+                            {
+                                Id = userId,
+                                Email = userEmail,
+                                Role = role
+                            };
                         }
                     }
                 }

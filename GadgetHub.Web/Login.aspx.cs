@@ -24,11 +24,24 @@ namespace GadgetHub.Web
             {
                 Session["UserId"] = user.Id;
                 Session["Role"] = user.Role;
+                Session["Email"] = user.Email;
 
                 lblStatus.Text = "Login successful!";
 
                 // Redirect to Home Page
-                Response.Redirect("GHCustomer/HomePage.aspx");
+                //Response.Redirect("GHCustomer/HomePage.aspx");
+                if(user.Role == "admin")
+                {
+                    Response.Redirect("GHAdmin/DashboardAdmin.aspx");
+                }
+                else if (user.Role == "distributor")
+                {
+                    Response.Redirect("GHCustomer/HomePage.aspx");
+                }
+                else
+                {
+                    Response.Redirect("GHCustomer/HomePage.aspx");
+                }
             }
             else
             {

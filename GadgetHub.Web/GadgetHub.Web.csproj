@@ -90,6 +90,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="GHAdmin\DashboardAdmin.aspx" />
+    <Content Include="GHAdmin\QuotationsSection.aspx" />
+    <Content Include="GHAdmin\UsersSection.aspx" />
     <Content Include="GHCustomer\CartPage.aspx" />
     <Content Include="GHCustomer\CheckoutPage.aspx" />
     <Content Include="Connected Services\GHServiceRef\GadgetHub.Web.GHServiceRef.Category.datasource">
@@ -119,6 +122,27 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GHAdmin\DashboardAdmin.aspx.cs">
+      <DependentUpon>DashboardAdmin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GHAdmin\DashboardAdmin.aspx.designer.cs">
+      <DependentUpon>DashboardAdmin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GHAdmin\QuotationsSection.aspx.cs">
+      <DependentUpon>QuotationsSection.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GHAdmin\QuotationsSection.aspx.designer.cs">
+      <DependentUpon>QuotationsSection.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GHAdmin\UsersSection.aspx.cs">
+      <DependentUpon>UsersSection.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GHAdmin\UsersSection.aspx.designer.cs">
+      <DependentUpon>UsersSection.aspx</DependentUpon>
+    </Compile>
     <Compile Include="GHCustomer\CartPage.aspx.cs">
       <DependentUpon>CartPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -195,7 +219,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="GHAdmin\" />
     <Folder Include="GHDistributor\" />
     <Folder Include="Models\" />
   </ItemGroup>
