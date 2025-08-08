@@ -48,13 +48,25 @@ namespace GadgetHub.Service
         public string Name { get; set; }
 
         [DataMember]
+        public string Description { get; set; }
+
+        [DataMember]
         public int Price { get; set; }
 
         [DataMember]
         public string Image { get; set; }
 
         [DataMember]
+        public int Stock { get; set; }
+
+        [DataMember]
         public int CategoryId { get; set; }
+
+        [DataMember]
+        public int DistributorId { get; set; }
+
+        [DataMember]
+        public int IsActive { get; set; }
     }
 
     [DataContract]
@@ -81,16 +93,16 @@ namespace GadgetHub.Service
     public class QuotationDTO
     {
         [DataMember]
-        public int QuotationId { get; set; }
+        public int? QuotationId { get; set; }
 
         [DataMember]
-        public int DistributorId { get; set; }
-        
-        [DataMember]
-        public string DistributorEmail { get; set; }
+        public int? DistributorId { get; set; }
 
         [DataMember]
-        public DateTime CreatedAt { get; set; }
+        public string Status { get; set; }
+
+        [DataMember]
+        public DateTime? CreatedAt { get; set; }
 
         [DataMember]
         public List<QuotationItemDTO> Items { get; set; }
@@ -112,7 +124,7 @@ namespace GadgetHub.Service
         [DataMember]
         public decimal Price { get; set; }  // price per item
 
-        [DataMember]
+        [IgnoreDataMember]
         public decimal Total => Price * Quantity;  // optional, for convenience
     }
 
@@ -121,13 +133,13 @@ namespace GadgetHub.Service
     public class DistributorDTO
     {
         [DataMember]
-        public int DistributorId { get; set; }
+        public int Id { get; set; }
 
         [DataMember]
-        public string DistributorName { get; set; }
+        public string Name { get; set; }
 
         [DataMember]
-        public string DistributorEmail { get; set; }
+        public string Email { get; set; }
 
         [DataMember]
         public string PhoneNumber { get; set; }
@@ -503,7 +515,7 @@ namespace GadgetHub.Service
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "SELECT Id, Name, Price, Image, CategoryId FROM Products";
+                string query = "SELECT Id, Name, Description, Price, Image, Stock, CategoryId, DistributorId, IsActive FROM Product";
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -513,9 +525,13 @@ namespace GadgetHub.Service
                         {
                             Id = reader.GetInt32(0),
                             Name = reader.GetString(1),
-                            Price = reader.GetInt32(2),
-                            Image = reader.GetString(3),
-                            CategoryId = reader.GetInt32(4)
+                            Description = reader.GetString(2),
+                            Price = reader.GetInt32(3),
+                            Image = reader.GetString(4),
+                            Stock = reader.GetInt32(5),
+                            CategoryId = reader.GetInt32(6),
+                            DistributorId = reader.GetInt32(6),
+                            IsActive = reader.GetInt32(7)
                         });
                     }
                 }
@@ -531,7 +547,7 @@ namespace GadgetHub.Service
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "SELECT DistributorId, DistributorName, DistributorEmail, PhoneNumber FROM Distributors";
+                string query = "SELECT Id, Username, Email, PhoneNumber FROM Users WHERE Role='distributor'";
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -539,10 +555,10 @@ namespace GadgetHub.Service
                     {
                         distributors.Add(new DistributorDTO
                         {
-                            DistributorId = reader.GetInt32(0),
-                            DistributorName = reader.GetString(1),
-                            DistributorEmail = reader.GetString(2),
-                            PhoneNumber = reader.GetString(3)
+                            Id = reader.GetInt32(0),                // Maps to 'Id'
+                            Name = reader.GetString(1),             // Maps to 'Username'
+                            Email = reader.GetString(2),            // Maps to 'Email'
+                            PhoneNumber = reader.GetString(3)       // Maps to 'PhoneNumber'
                         });
                     }
                 }
@@ -561,7 +577,7 @@ namespace GadgetHub.Service
                 try
                 {
                     // Insert into Quotations
-                    string insertQuotation = "INSERT INTO Quotations (DistributorId, CreatedAt) OUTPUT INSERTED.QuotationId VALUES (@DistributorId, @CreatedAt)";
+                    string insertQuotation = "INSERT INTO Quotation (DistributorId, CreatedAt) OUTPUT INSERTED.Id VALUES (@DistributorId, @CreatedAt)";
                     SqlCommand cmdQuotation = new SqlCommand(insertQuotation, conn, transaction);
                     cmdQuotation.Parameters.AddWithValue("@DistributorId", distributorId);
                     cmdQuotation.Parameters.AddWithValue("@CreatedAt", DateTime.Now);
@@ -570,7 +586,7 @@ namespace GadgetHub.Service
                     // Insert each item
                     foreach (var item in items)
                     {
-                        string insertItem = @"INSERT INTO QuotationItems (QuotationId, ProductId, Quantity, Price) 
+                        string insertItem = @"INSERT INTO QuotationItem (QuotationId, ProductId, Qty, Price) 
                                       VALUES (@QuotationId, @ProductId, @Quantity, @Price)";
                         SqlCommand cmdItem = new SqlCommand(insertItem, conn, transaction);
                         cmdItem.Parameters.AddWithValue("@QuotationId", quotationId);
@@ -600,18 +616,36 @@ namespace GadgetHub.Service
                 conn.Open();
 
                 // Get quotation headers
-                string qQuery = "SELECT QuotationId, DistributorId, CreatedAt FROM Quotations";
+                string qQuery = "SELECT Id, DistributorId, Status, CreatedAt FROM Quotation";
                 using (SqlCommand cmd = new SqlCommand(qQuery, conn))
+                //using (SqlDataReader reader = cmd.ExecuteReader())
+                //{
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    while (reader.Read())
+                    if (reader.HasRows)
                     {
+                        while (reader.Read())
+                        {
+                            quotations.Add(new QuotationDTO
+                            {
+                                QuotationId = reader.IsDBNull(0) ? (int?)null : Convert.ToInt32(reader[0]),
+                                DistributorId = reader.IsDBNull(1) ? (int?)null : Convert.ToInt32(reader[1]),
+                                Status = reader.IsDBNull(2) ? null : Convert.ToString(reader[2]),
+                                CreatedAt = reader.IsDBNull(3) ? (DateTime?)null : reader.GetDateTime(3),
+                                Items = new List<QuotationItemDTO>()
+                            });
+                        }
+                    }
+                    else
+                    {
+                        // Add a placeholder row with nulls
                         quotations.Add(new QuotationDTO
                         {
-                            QuotationId = reader.GetInt32(0),
-                            DistributorId = reader.GetInt32(1),
-                            CreatedAt = reader.GetDateTime(2),
-                            Items = new List<QuotationItemDTO>()  // Load separately below
+                            QuotationId = null,
+                            DistributorId = null,
+                            Status = null,
+                            CreatedAt = null,
+                            Items = new List<QuotationItemDTO>()
                         });
                     }
                 }
@@ -619,9 +653,9 @@ namespace GadgetHub.Service
                 // Get quotation items
                 foreach (var quote in quotations)
                 {
-                    string iQuery = @"SELECT qi.ProductId, p.Name, qi.Quantity, qi.Price 
-                              FROM QuotationItems qi 
-                              JOIN Products p ON qi.ProductId = p.Id
+                    string iQuery = @"SELECT qi.ProductId, p.Name, qi.Qty, qi.Price 
+                              FROM QuotationItem qi 
+                              JOIN Product p ON qi.ProductId = p.Id
                               WHERE qi.QuotationId = @QuotationId";
 
                     using (SqlCommand cmd = new SqlCommand(iQuery, conn))

@@ -244,16 +244,28 @@ namespace GadgetHub.Web.GHServiceRef {
         private int CategoryIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DescriptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int DistributorIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int IdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ImageField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IsActiveField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string NameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int PriceField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int StockField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -274,6 +286,32 @@ namespace GadgetHub.Web.GHServiceRef {
                 if ((this.CategoryIdField.Equals(value) != true)) {
                     this.CategoryIdField = value;
                     this.RaisePropertyChanged("CategoryId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Description {
+            get {
+                return this.DescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
+                    this.DescriptionField = value;
+                    this.RaisePropertyChanged("Description");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int DistributorId {
+            get {
+                return this.DistributorIdField;
+            }
+            set {
+                if ((this.DistributorIdField.Equals(value) != true)) {
+                    this.DistributorIdField = value;
+                    this.RaisePropertyChanged("DistributorId");
                 }
             }
         }
@@ -305,6 +343,19 @@ namespace GadgetHub.Web.GHServiceRef {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public int IsActive {
+            get {
+                return this.IsActiveField;
+            }
+            set {
+                if ((this.IsActiveField.Equals(value) != true)) {
+                    this.IsActiveField = value;
+                    this.RaisePropertyChanged("IsActive");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string Name {
             get {
                 return this.NameField;
@@ -326,6 +377,19 @@ namespace GadgetHub.Web.GHServiceRef {
                 if ((this.PriceField.Equals(value) != true)) {
                     this.PriceField = value;
                     this.RaisePropertyChanged("Price");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Stock {
+            get {
+                return this.StockField;
+            }
+            set {
+                if ((this.StockField.Equals(value) != true)) {
+                    this.StockField = value;
+                    this.RaisePropertyChanged("Stock");
                 }
             }
         }
@@ -470,9 +534,6 @@ namespace GadgetHub.Web.GHServiceRef {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int QuantityField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private decimal TotalField;
-        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -535,19 +596,6 @@ namespace GadgetHub.Web.GHServiceRef {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal Total {
-            get {
-                return this.TotalField;
-            }
-            set {
-                if ((this.TotalField.Equals(value) != true)) {
-                    this.TotalField = value;
-                    this.RaisePropertyChanged("Total");
-                }
-            }
-        }
-        
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         
         protected void RaisePropertyChanged(string propertyName) {
@@ -568,13 +616,13 @@ namespace GadgetHub.Web.GHServiceRef {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string DistributorEmailField;
+        private string EmailField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int DistributorIdField;
+        private int IdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string DistributorNameField;
+        private string NameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PhoneNumberField;
@@ -590,40 +638,40 @@ namespace GadgetHub.Web.GHServiceRef {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DistributorEmail {
+        public string Email {
             get {
-                return this.DistributorEmailField;
+                return this.EmailField;
             }
             set {
-                if ((object.ReferenceEquals(this.DistributorEmailField, value) != true)) {
-                    this.DistributorEmailField = value;
-                    this.RaisePropertyChanged("DistributorEmail");
+                if ((object.ReferenceEquals(this.EmailField, value) != true)) {
+                    this.EmailField = value;
+                    this.RaisePropertyChanged("Email");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int DistributorId {
+        public int Id {
             get {
-                return this.DistributorIdField;
+                return this.IdField;
             }
             set {
-                if ((this.DistributorIdField.Equals(value) != true)) {
-                    this.DistributorIdField = value;
-                    this.RaisePropertyChanged("DistributorId");
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DistributorName {
+        public string Name {
             get {
-                return this.DistributorNameField;
+                return this.NameField;
             }
             set {
-                if ((object.ReferenceEquals(this.DistributorNameField, value) != true)) {
-                    this.DistributorNameField = value;
-                    this.RaisePropertyChanged("DistributorName");
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
                 }
             }
         }
@@ -661,16 +709,19 @@ namespace GadgetHub.Web.GHServiceRef {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime CreatedAtField;
+        private System.Nullable<System.DateTime> CreatedAtField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int DistributorIdField;
+        private System.Nullable<int> DistributorIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private GadgetHub.Web.GHServiceRef.QuotationItemDTO[] ItemsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int QuotationIdField;
+        private System.Nullable<int> QuotationIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string StatusField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -683,7 +734,7 @@ namespace GadgetHub.Web.GHServiceRef {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime CreatedAt {
+        public System.Nullable<System.DateTime> CreatedAt {
             get {
                 return this.CreatedAtField;
             }
@@ -696,7 +747,7 @@ namespace GadgetHub.Web.GHServiceRef {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int DistributorId {
+        public System.Nullable<int> DistributorId {
             get {
                 return this.DistributorIdField;
             }
@@ -722,7 +773,7 @@ namespace GadgetHub.Web.GHServiceRef {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int QuotationId {
+        public System.Nullable<int> QuotationId {
             get {
                 return this.QuotationIdField;
             }
@@ -730,6 +781,19 @@ namespace GadgetHub.Web.GHServiceRef {
                 if ((this.QuotationIdField.Equals(value) != true)) {
                     this.QuotationIdField = value;
                     this.RaisePropertyChanged("QuotationId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Status {
+            get {
+                return this.StatusField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StatusField, value) != true)) {
+                    this.StatusField = value;
+                    this.RaisePropertyChanged("Status");
                 }
             }
         }

@@ -116,9 +116,14 @@
     <Content Include="Connected Services\GHServiceRef\GadgetHub.Web.GHServiceRef.DistributorDTO.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <None Include="Connected Services\GHServiceRef\item.disco" />
+    <None Include="Connected Services\GHServiceRef\Arrays.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\GHServiceRef\configuration91.svcinfo" />
     <None Include="Connected Services\GHServiceRef\configuration.svcinfo" />
+    <None Include="Connected Services\GHServiceRef\GadgetHub.Service.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\GHServiceRef\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -226,17 +231,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\GHServiceRef\GadgetHubService.wsdl" />
-    <None Include="Connected Services\GHServiceRef\item.xsd">
+    <None Include="Connected Services\GHServiceRef\service.wsdl" />
+    <None Include="Connected Services\GHServiceRef\service.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\GHServiceRef\item1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\GHServiceRef\item2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\GHServiceRef\item3.xsd">
+    <None Include="Connected Services\GHServiceRef\service1.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />

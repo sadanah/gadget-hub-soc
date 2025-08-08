@@ -19,15 +19,14 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:8733/GadgetHubService/" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost:8733/GadgetHubService/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="GadgetHubService.wsdl" MetadataType="Wsdl" ID="5ecbd4d3-072d-4968-b7d6-a6756bc912fd" SourceId="1" SourceUrl="http://localhost:8733/GadgetHubService/?wsdl" />
-    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="fec306ef-ff6c-4761-b052-64dd8972561f" SourceId="1" SourceUrl="http://localhost:8733/GadgetHubService/?xsd=xsd1" />
-    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="6011239b-ea35-4df3-942e-d15c4a8c5b22" SourceId="1" SourceUrl="http://localhost:8733/GadgetHubService/?xsd=xsd2" />
-    <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="93f55c19-daef-468a-867b-a663624f53e6" SourceId="1" SourceUrl="http://localhost:8733/GadgetHubService/?xsd=xsd0" />
-    <MetadataFile FileName="item.disco" MetadataType="Disco" ID="7eb387cf-8dc1-4dc5-94a9-c6833d5b0cc7" SourceId="1" SourceUrl="http://localhost:8733/GadgetHubService/?disco" />
-    <MetadataFile FileName="item3.xsd" MetadataType="Schema" ID="286c123a-64b6-4ce8-985d-00893998c5ea" SourceId="1" SourceUrl="http://localhost:8733/GadgetHubService/?xsd=xsd3" />
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="ec5258a3-3264-44b7-8fb2-324d3f5abdc8" SourceId="1" SourceUrl="http://localhost:8733/GadgetHubService/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="e2d489a1-e913-430a-9676-7d57eacda320" SourceId="1" SourceUrl="http://localhost:8733/GadgetHubService/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="3a9b8154-7f53-4b74-953a-b794f661893d" SourceId="1" SourceUrl="http://localhost:8733/GadgetHubService/mex" />
+    <MetadataFile FileName="GadgetHub.Service.xsd" MetadataType="Schema" ID="aa588460-2eb7-4d94-a2c0-1e4f02ad20e3" SourceId="1" SourceUrl="http://localhost:8733/GadgetHubService/mex" />
+    <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="1e77e889-55e8-4b81-bb8a-bd5008aa65f0" SourceId="1" SourceUrl="http://localhost:8733/GadgetHubService/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
