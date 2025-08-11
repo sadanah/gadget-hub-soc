@@ -1227,6 +1227,18 @@ namespace GadgetHub.Web.GHServiceRef {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/GetOrdersByUserId", ReplyAction="http://tempuri.org/IGadgetHubService/GetOrdersByUserIdResponse")]
         System.Threading.Tasks.Task<GadgetHub.Web.GHServiceRef.OrderDTO[]> GetOrdersByUserIdAsync(int userId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/GetOrdersForDistributor", ReplyAction="http://tempuri.org/IGadgetHubService/GetOrdersForDistributorResponse")]
+        GadgetHub.Web.GHServiceRef.OrderDTO[] GetOrdersForDistributor(int distributorId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/GetOrdersForDistributor", ReplyAction="http://tempuri.org/IGadgetHubService/GetOrdersForDistributorResponse")]
+        System.Threading.Tasks.Task<GadgetHub.Web.GHServiceRef.OrderDTO[]> GetOrdersForDistributorAsync(int distributorId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/UpdateOrderStatus", ReplyAction="http://tempuri.org/IGadgetHubService/UpdateOrderStatusResponse")]
+        bool UpdateOrderStatus(int orderId, string newStatus);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/UpdateOrderStatus", ReplyAction="http://tempuri.org/IGadgetHubService/UpdateOrderStatusResponse")]
+        System.Threading.Tasks.Task<bool> UpdateOrderStatusAsync(int orderId, string newStatus);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1390,6 +1402,22 @@ namespace GadgetHub.Web.GHServiceRef {
         
         public System.Threading.Tasks.Task<GadgetHub.Web.GHServiceRef.OrderDTO[]> GetOrdersByUserIdAsync(int userId) {
             return base.Channel.GetOrdersByUserIdAsync(userId);
+        }
+        
+        public GadgetHub.Web.GHServiceRef.OrderDTO[] GetOrdersForDistributor(int distributorId) {
+            return base.Channel.GetOrdersForDistributor(distributorId);
+        }
+        
+        public System.Threading.Tasks.Task<GadgetHub.Web.GHServiceRef.OrderDTO[]> GetOrdersForDistributorAsync(int distributorId) {
+            return base.Channel.GetOrdersForDistributorAsync(distributorId);
+        }
+        
+        public bool UpdateOrderStatus(int orderId, string newStatus) {
+            return base.Channel.UpdateOrderStatus(orderId, newStatus);
+        }
+        
+        public System.Threading.Tasks.Task<bool> UpdateOrderStatusAsync(int orderId, string newStatus) {
+            return base.Channel.UpdateOrderStatusAsync(orderId, newStatus);
         }
     }
 }

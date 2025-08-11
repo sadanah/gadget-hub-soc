@@ -859,5 +859,98 @@ namespace GadgetHub.Service
             return orders;
         }
 
+        public List<OrderDTO> GetOrdersForDistributor(int distributorId)
+        {
+            List<OrderDTO> orders = new List<OrderDTO>();
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                // Get orders that have order items with products by this distributor
+                string query = @"
+            SELECT DISTINCT o.Id, o.UserId, u.Username, o.Total, o.DeliveryAddress, o.Status, o.CreatedAt
+            FROM [Order] o
+            JOIN Users u ON o.UserId = u.Id
+            JOIN Order_Items oi ON o.Id = oi.OrderId
+            JOIN Product p ON oi.ProductId = p.Id
+            WHERE p.DistributorId = @DistributorId
+            ORDER BY o.CreatedAt DESC";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@DistributorId", distributorId);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            orders.Add(new OrderDTO
+                            {
+                                Id = reader.GetInt32(0),
+                                UserId = reader.GetInt32(1),
+                                UserName = reader.GetString(2),
+                                Total = reader.GetInt32(3),
+                                DeliveryAddress = reader.GetString(4),
+                                Status = reader.GetString(5),
+                                CreatedAt = reader.GetDateTime(6),
+                                Items = new List<OrderItemDTO>()
+                            });
+                        }
+                    }
+                }
+
+                // Load order items for each order
+                foreach (var order in orders)
+                {
+                    string itemsQuery = @"
+                SELECT oi.ProductId, p.Name, oi.Qty
+                FROM Order_Items oi
+                JOIN Product p ON oi.ProductId = p.Id
+                WHERE oi.OrderId = @OrderId";
+
+                    using (SqlCommand cmd = new SqlCommand(itemsQuery, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@OrderId", order.Id);
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                order.Items.Add(new OrderItemDTO
+                                {
+                                    ProductId = reader.GetInt32(0),
+                                    ProductName = reader.GetString(1),
+                                    Qty = reader.GetInt32(2)
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+
+            return orders;
+        }
+
+        public bool UpdateOrderStatus(int orderId, string newStatus)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                string updateQuery = "UPDATE [Order] SET Status = @Status WHERE Id = @OrderId";
+
+                using (SqlCommand cmd = new SqlCommand(updateQuery, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Status", newStatus);
+                    cmd.Parameters.AddWithValue("@OrderId", orderId);
+
+                    int rows = cmd.ExecuteNonQuery();
+                    return rows > 0;
+                }
+            }
+        }
+
+
     }
 }

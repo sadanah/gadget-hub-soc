@@ -60,6 +60,12 @@ namespace GadgetHub.Service
         [OperationContract]
         List<OrderDTO> GetOrdersByUserId(int userId);
 
+        [OperationContract]
+        List<OrderDTO> GetOrdersForDistributor(int distributorId);
+
+        [OperationContract]
+        bool UpdateOrderStatus(int orderId, string newStatus);
+
     }
 }
 
