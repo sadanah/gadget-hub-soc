@@ -1,101 +1,51 @@
-﻿using GadgetHub.Web.GHServiceRef;
-using System;
-using System.Collections.Generic;
+﻿using System;
+using System.Data;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace GadgetHub.Web.GHAdmin
 {
     public partial class QuotationsSection : System.Web.UI.Page
     {
-        protected string productOptionsHtml = "";
+        private GHServiceRef.GadgetHubServiceClient service = new GHServiceRef.GadgetHubServiceClient();
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                LoadDistributors();
-                LoadProductOptions();
                 LoadQuotations();
             }
         }
 
-        private void LoadDistributors()
+        private void LoadQuotations(string status = "", string search = "")
         {
-            var client = new GadgetHubServiceClient();
-            var distributors = client.GetAllDistributors();
-            ddlDistributors.DataSource = distributors;
-            ddlDistributors.DataTextField = "Email";
-            ddlDistributors.DataValueField = "Id";
-            ddlDistributors.DataBind();
-        }
+            var quotations = service.GetAllQuotations();
 
-        private void LoadProductOptions()
-        {
-            var client = new GadgetHubServiceClient();
-            var products = client.GetAllProducts();
+            var filtered = quotations.AsQueryable();
 
-            foreach (var p in products)
+            if (!string.IsNullOrEmpty(status))
             {
-                productOptionsHtml += $"<option value='{p.Id}'>{p.Name}</option>";
-            }
-        }
-
-        private void LoadQuotations()
-        {
-            var client = new GadgetHubServiceClient();
-            var quotations = client.GetAllQuotations(); // returns enriched quotation list
-
-            var data = quotations.Select(q => new
-            {
-                QuotationID = q.QuotationId,
-                DistributorID = q.DistributorId,
-                //DistributorEmail = q.DistributorEmail,
-                Items = q.Items.Select(i => new
-                {
-                    ProductName = i.ProductName,
-                    Quantity = i.Quantity,
-                    Price = i.Price
-                }).ToList(),
-                Total = q.Items.Sum(i => i.Quantity * i.Price)
-            }).ToList();
-
-            rptQuotations.DataSource = data;
-            rptQuotations.DataBind();
-        }
-
-        protected void btnCreate_Click(object sender, EventArgs e)
-        {
-            int distributorId = int.Parse(ddlDistributors.SelectedValue);
-            var items = new List<QuotationItemDTO>();
-
-            string[] productIds = Request.Form.GetValues("productId");
-            string[] quantities = Request.Form.GetValues("quantity");
-            string[] prices = Request.Form.GetValues("price");
-
-            for (int i = 0; i < productIds.Length; i++)
-            {
-                if (int.TryParse(productIds[i], out int productId) &&
-                    int.TryParse(quantities[i], out int qty) &&
-                    decimal.TryParse(prices[i], out decimal price))
-                {
-                    items.Add(new QuotationItemDTO
-                    {
-                        ProductId = productId,
-                        Quantity = qty,
-                        Price = price
-                    });
-                }
+                filtered = filtered.Where(q => q.Status.Equals(status, StringComparison.OrdinalIgnoreCase));
             }
 
-            var client = new GadgetHubServiceClient();
-            if (client.CreateQuotation(distributorId, items.ToArray()))
+            if (!string.IsNullOrEmpty(search))
             {
-                LoadQuotations(); // Refresh display
+                filtered = filtered.Where(q =>
+                    q.DistributorName.Contains(search, StringComparison.OrdinalIgnoreCase) ||
+                    q.DistributorId.ToString() == search);
             }
+
+            gvQuotations.DataSource = filtered.ToList();
+            gvQuotations.DataBind();
         }
 
+        protected void ddlStatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LoadQuotations(ddlStatus.SelectedValue, txtSearch.Text.Trim());
+        }
+
+        protected void btnSearch_Click(object sender, EventArgs e)
+        {
+            LoadQuotations(ddlStatus.SelectedValue, txtSearch.Text.Trim());
+        }
     }
 }
