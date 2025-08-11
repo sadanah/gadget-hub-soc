@@ -449,6 +449,224 @@ namespace GadgetHub.Web.GHServiceRef {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="QuotationDTO", Namespace="http://schemas.datacontract.org/2004/07/GadgetHub.Service")]
+    [System.SerializableAttribute()]
+    public partial class QuotationDTO : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> CreatedAtField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> DistributorIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DistributorNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private GadgetHub.Web.GHServiceRef.QuotationItemDTO[] ItemsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> QuotationIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string StatusField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> CreatedAt {
+            get {
+                return this.CreatedAtField;
+            }
+            set {
+                if ((this.CreatedAtField.Equals(value) != true)) {
+                    this.CreatedAtField = value;
+                    this.RaisePropertyChanged("CreatedAt");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> DistributorId {
+            get {
+                return this.DistributorIdField;
+            }
+            set {
+                if ((this.DistributorIdField.Equals(value) != true)) {
+                    this.DistributorIdField = value;
+                    this.RaisePropertyChanged("DistributorId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DistributorName {
+            get {
+                return this.DistributorNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DistributorNameField, value) != true)) {
+                    this.DistributorNameField = value;
+                    this.RaisePropertyChanged("DistributorName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GadgetHub.Web.GHServiceRef.QuotationItemDTO[] Items {
+            get {
+                return this.ItemsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ItemsField, value) != true)) {
+                    this.ItemsField = value;
+                    this.RaisePropertyChanged("Items");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> QuotationId {
+            get {
+                return this.QuotationIdField;
+            }
+            set {
+                if ((this.QuotationIdField.Equals(value) != true)) {
+                    this.QuotationIdField = value;
+                    this.RaisePropertyChanged("QuotationId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Status {
+            get {
+                return this.StatusField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StatusField, value) != true)) {
+                    this.StatusField = value;
+                    this.RaisePropertyChanged("Status");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="QuotationItemDTO", Namespace="http://schemas.datacontract.org/2004/07/GadgetHub.Service")]
+    [System.SerializableAttribute()]
+    public partial class QuotationItemDTO : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private decimal PriceField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int ProductIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ProductNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int QuantityField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal Price {
+            get {
+                return this.PriceField;
+            }
+            set {
+                if ((this.PriceField.Equals(value) != true)) {
+                    this.PriceField = value;
+                    this.RaisePropertyChanged("Price");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int ProductId {
+            get {
+                return this.ProductIdField;
+            }
+            set {
+                if ((this.ProductIdField.Equals(value) != true)) {
+                    this.ProductIdField = value;
+                    this.RaisePropertyChanged("ProductId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ProductName {
+            get {
+                return this.ProductNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ProductNameField, value) != true)) {
+                    this.ProductNameField = value;
+                    this.RaisePropertyChanged("ProductName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Quantity {
+            get {
+                return this.QuantityField;
+            }
+            set {
+                if ((this.QuantityField.Equals(value) != true)) {
+                    this.QuantityField = value;
+                    this.RaisePropertyChanged("Quantity");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="GHServiceRef.IGadgetHubService")]
     public interface IGadgetHubService {
@@ -524,6 +742,12 @@ namespace GadgetHub.Web.GHServiceRef {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/ToggleUserStatus", ReplyAction="http://tempuri.org/IGadgetHubService/ToggleUserStatusResponse")]
         System.Threading.Tasks.Task ToggleUserStatusAsync(int userId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/GetAllQuotations", ReplyAction="http://tempuri.org/IGadgetHubService/GetAllQuotationsResponse")]
+        GadgetHub.Web.GHServiceRef.QuotationDTO[] GetAllQuotations();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/GetAllQuotations", ReplyAction="http://tempuri.org/IGadgetHubService/GetAllQuotationsResponse")]
+        System.Threading.Tasks.Task<GadgetHub.Web.GHServiceRef.QuotationDTO[]> GetAllQuotationsAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -647,6 +871,14 @@ namespace GadgetHub.Web.GHServiceRef {
         
         public System.Threading.Tasks.Task ToggleUserStatusAsync(int userId) {
             return base.Channel.ToggleUserStatusAsync(userId);
+        }
+        
+        public GadgetHub.Web.GHServiceRef.QuotationDTO[] GetAllQuotations() {
+            return base.Channel.GetAllQuotations();
+        }
+        
+        public System.Threading.Tasks.Task<GadgetHub.Web.GHServiceRef.QuotationDTO[]> GetAllQuotationsAsync() {
+            return base.Channel.GetAllQuotationsAsync();
         }
     }
 }

@@ -45,6 +45,8 @@ namespace GadgetHub.Service
         [OperationContract]
         void ToggleUserStatus(int userId);
 
+        [OperationContract]
+        List<QuotationDTO> GetAllQuotations();
     }
 }
 

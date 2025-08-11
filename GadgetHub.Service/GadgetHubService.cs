@@ -76,6 +76,48 @@ namespace GadgetHub.Service
         public int Qty { get; set; }
     }
 
+    // QuotationDTO.cs
+    [DataContract]
+    public class QuotationDTO
+    {
+        [DataMember]
+        public int? QuotationId { get; set; }
+
+        [DataMember]
+        public int? DistributorId { get; set; }
+
+        [DataMember]
+        public string DistributorName { get; set; }
+
+        [DataMember]
+        public string Status { get; set; }
+
+        [DataMember]
+        public DateTime? CreatedAt { get; set; }
+
+        [DataMember]
+        public List<QuotationItemDTO> Items { get; set; }
+    }
+
+    // QuotationItemDTO.cs
+    [DataContract]
+    public class QuotationItemDTO
+    {
+        [DataMember]
+        public int ProductId { get; set; }
+
+        [DataMember]
+        public string ProductName { get; set; }
+
+        [DataMember]
+        public int Quantity { get; set; }
+
+        [DataMember]
+        public decimal Price { get; set; }  // price per item
+
+        [IgnoreDataMember]
+        public decimal Total => Price * Quantity;  // optional, for convenience
+    }
 
     public class GadgetHubService : IGadgetHubService
     {
@@ -438,5 +480,88 @@ namespace GadgetHub.Service
             }
         }
 
+        public List<QuotationDTO> GetAllQuotations()
+        {
+            List<QuotationDTO> quotations = new List<QuotationDTO>();
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                // Get quotation headers
+                string qQuery = @"
+                    SELECT 
+                        q.Id, 
+                        q.DistributorId, 
+                        q.Status, 
+                        q.CreatedAt,
+                        u.Username
+                    FROM Quotation q
+                    LEFT JOIN Users u ON q.DistributorId = u.Id";
+                using (SqlCommand cmd = new SqlCommand(qQuery, conn))
+                //using (SqlDataReader reader = cmd.ExecuteReader())
+                //{
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            quotations.Add(new QuotationDTO
+                            {
+                                QuotationId = reader.IsDBNull(0) ? (int?)null : reader.GetInt32(0),
+                                DistributorId = reader.IsDBNull(1) ? (int?)null : reader.GetInt32(1),
+                                Status = reader.IsDBNull(2) ? null : reader.GetString(2),
+                                CreatedAt = reader.IsDBNull(3) ? (DateTime?)null : reader.GetDateTime(3),
+                                DistributorName = reader.IsDBNull(4) ? null : reader.GetString(4),
+                                Items = new List<QuotationItemDTO>()
+                            });
+                        }
+                    }
+                    else
+                    {
+                        // Add a placeholder row with nulls
+                        quotations.Add(new QuotationDTO
+                        {
+                            QuotationId = null,
+                            DistributorId = null,
+                            Status = null,
+                            CreatedAt = null,
+                            DistributorName = null,
+                            Items = new List<QuotationItemDTO>()
+                        });
+                    }
+                }
+
+                // Get quotation items
+                foreach (var quote in quotations)
+                {
+                    string iQuery = @"SELECT qi.ProductId, p.Name, qi.Qty, qi.Price 
+                      FROM QuotationItem qi 
+                      JOIN Product p ON qi.ProductId = p.Id
+                      WHERE qi.QuotationId = @QuotationId";
+
+                    using (SqlCommand cmd = new SqlCommand(iQuery, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@QuotationId", quote.QuotationId);
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                quote.Items.Add(new QuotationItemDTO
+                                {
+                                    ProductId = reader.GetInt32(0),
+                                    ProductName = reader.GetString(1),
+                                    Quantity = reader.GetInt32(2),
+                                    Price = reader.GetDecimal(3)
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+
+            return quotations;
+        }
     }
 }
