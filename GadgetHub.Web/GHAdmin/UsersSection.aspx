@@ -65,6 +65,44 @@
             vertical-align: middle;
         }
 
+        /* Force blue table header */
+table thead th {
+    background-color: #007BFF !important; /* Bootstrap primary blue */
+    color: white !important;
+    border: none;
+}
+
+/* Rounded corners for the whole table */
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 8px;
+    overflow: hidden; /* Ensures rounded corners show */
+}
+
+/* Optional: make first/last th corners rounded */
+table thead th:first-child {
+    border-top-left-radius: 8px;
+}
+table thead th:last-child {
+    border-top-right-radius: 8px;
+}
+/* Target the first row of the GridView table */
+#gvUsers tr:first-child th {
+    background-color: #2980b9; /* Blue */
+    color: white;
+    font-weight: bold;
+    border: none;
+}
+
+/* Optional rounded corners for first/last headers */
+#gvUsers tr:first-child th:first-child {
+    border-top-left-radius: 8px;
+}
+#gvUsers tr:first-child th:last-child {
+    border-top-right-radius: 8px;
+}
+
         /* Header row */
         thead th {
             background-color: #2980b9;
