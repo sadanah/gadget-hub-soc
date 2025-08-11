@@ -5,15 +5,129 @@
 <head runat="server">
     <title>Your Cart - Gadget Hub</title>
     <style>
-        .cart-container { max-width: 800px; margin: auto; padding: 20px; }
-        .cart-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; padding: 10px 0; }
-        .cart-details { flex-grow: 1; margin-left: 20px; }
-        .cart-actions button { margin-left: 10px; }
-        .button-group {display:flex; flex-direction:row; justify-content:space-between;}
-        .checkout-btn,.continue-shopping-btn { margin-top: 20px; color: white; padding: 10px 20px; border: none; cursor: pointer; }
-        .checkout-btn {background: #4CAF50;}
-        .continue-shopping-btn {background: #666;}
-        .empty-cart { text-align: center; font-size: 1.2em; color: #666; padding: 40px; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f9fc;
+            margin: 0;
+            padding: 0;
+            color: #2c3e50;
+        }
+        .cart-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 30px 40px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(41, 128, 185, 0.15);
+        }
+        h1 {
+            color: #2980b9;
+            margin-bottom: 30px;
+            font-weight: 700;
+            font-size: 2em;
+            user-select: none;
+        }
+        .cart-item {
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #e1e8f0;
+            padding: 20px 0;
+            gap: 20px;
+        }
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+        .cart-item img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+            user-select: none;
+        }
+        .cart-details {
+            flex-grow: 1;
+        }
+        .cart-details h3 {
+            margin: 0 0 8px 0;
+            font-weight: 600;
+            font-size: 1.2em;
+            color: #34495e;
+            user-select: none;
+        }
+        .cart-details p {
+            margin: 4px 0;
+            font-size: 1em;
+            color: #555;
+            user-select: none;
+        }
+        .cart-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .cart-actions button {
+            background-color: #2980b9;
+            border: none;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            user-select: none;
+        }
+        .cart-actions button:hover {
+            background-color: #3a7bd5;
+        }
+        .cart-actions button:active {
+            background-color: #1c4f7a;
+        }
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 35px;
+        }
+        .checkout-btn,
+        .continue-shopping-btn {
+            padding: 14px 28px;
+            font-size: 1.1em;
+            border-radius: 8px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.3s ease;
+        }
+        .checkout-btn {
+            background-color: #27ae60;
+            color: white;
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.4);
+        }
+        .checkout-btn:hover {
+            background-color: #2ecc71;
+        }
+        .checkout-btn:active {
+            background-color: #1e8449;
+        }
+        .continue-shopping-btn {
+            background-color: #7f8c8d;
+            color: white;
+            box-shadow: 0 5px 15px rgba(127, 140, 141, 0.4);
+        }
+        .continue-shopping-btn:hover {
+            background-color: #95a5a6;
+        }
+        .continue-shopping-btn:active {
+            background-color: #626d70;
+        }
+        .empty-cart {
+            text-align: center;
+            font-size: 1.3em;
+            color: #7f8c8d;
+            padding: 60px 20px;
+            user-select: none;
+        }
     </style>
 </head>
 <body>
