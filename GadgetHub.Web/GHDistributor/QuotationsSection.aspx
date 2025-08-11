@@ -11,32 +11,41 @@
             margin-bottom: 30px;
         }
         th, td {
-            border: 1px solid #ddd;
+            border: 1px solid #ccc; /* match Orders table border color */
             padding: 8px;
+            text-align: left;
         }
         th {
-            background-color: #f2f2f2;
+            background-color: #2980b9; /* darker blue header */
+            color: white;             /* white text for header */
         }
         input[type="number"], input[type="text"] {
             width: 80px;
+            padding: 4px;
+            box-sizing: border-box;
         }
         .btn-update {
-            background-color: #4CAF50;
+            background-color: #27ae60; /* slightly different green */
             color: white;
             border: none;
             padding: 6px 12px;
             cursor: pointer;
             border-radius: 4px;
+            transition: background-color 0.3s ease;
         }
         .btn-update:hover {
-            background-color: #45a049;
+            background-color: #2ecc71;
+        }
+        /* Optional: Add hover effect on rows */
+        tbody tr:hover {
+            background-color: #f9f9f9;
         }
     </style>
     <script>
         function updateQuotationItem(quotationId, productId) {
             var qtyInput = document.getElementById('qty_' + quotationId + '_' + productId);
             var priceInput = document.getElementById('price_' + quotationId + '_' + productId);
-            
+
             var qty = qtyInput.value;
             var price = priceInput.value;
 
