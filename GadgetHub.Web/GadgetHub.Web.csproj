@@ -131,6 +131,7 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Content Include="GHCustomer\DashboardCustomer.aspx" />
     <Content Include="Global.asax" />
     <Content Include="GHCustomer\HomePage.aspx" />
     <Content Include="Login.aspx" />
@@ -199,6 +200,13 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="GHCustomer\DashboardCustomer.aspx.cs">
+      <DependentUpon>DashboardCustomer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GHCustomer\DashboardCustomer.aspx.designer.cs">
+      <DependentUpon>DashboardCustomer.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

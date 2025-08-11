@@ -107,5 +107,10 @@ namespace GadgetHub.Web
         {
             Response.Redirect("CheckoutPage.aspx");
         }
+
+        protected void btnDashboard_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("DashboardCustomer.aspx");
+        }
     }
 }

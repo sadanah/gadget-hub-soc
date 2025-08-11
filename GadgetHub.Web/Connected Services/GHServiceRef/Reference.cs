@@ -1221,6 +1221,12 @@ namespace GadgetHub.Web.GHServiceRef {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/GetAllContactMessages", ReplyAction="http://tempuri.org/IGadgetHubService/GetAllContactMessagesResponse")]
         System.Threading.Tasks.Task<GadgetHub.Web.GHServiceRef.ContactMessageDTO[]> GetAllContactMessagesAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/GetOrdersByUserId", ReplyAction="http://tempuri.org/IGadgetHubService/GetOrdersByUserIdResponse")]
+        GadgetHub.Web.GHServiceRef.OrderDTO[] GetOrdersByUserId(int userId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/GetOrdersByUserId", ReplyAction="http://tempuri.org/IGadgetHubService/GetOrdersByUserIdResponse")]
+        System.Threading.Tasks.Task<GadgetHub.Web.GHServiceRef.OrderDTO[]> GetOrdersByUserIdAsync(int userId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1376,6 +1382,14 @@ namespace GadgetHub.Web.GHServiceRef {
         
         public System.Threading.Tasks.Task<GadgetHub.Web.GHServiceRef.ContactMessageDTO[]> GetAllContactMessagesAsync() {
             return base.Channel.GetAllContactMessagesAsync();
+        }
+        
+        public GadgetHub.Web.GHServiceRef.OrderDTO[] GetOrdersByUserId(int userId) {
+            return base.Channel.GetOrdersByUserId(userId);
+        }
+        
+        public System.Threading.Tasks.Task<GadgetHub.Web.GHServiceRef.OrderDTO[]> GetOrdersByUserIdAsync(int userId) {
+            return base.Channel.GetOrdersByUserIdAsync(userId);
         }
     }
 }

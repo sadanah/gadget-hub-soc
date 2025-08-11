@@ -55,6 +55,7 @@
                     <span id="cartCount" class="cart-count"><%= CartCount %></span>
                 </div>
                 <asp:Button ID="btnCheckout" runat="server" Text="Checkout" OnClick="btnCheckout_Click" CssClass="button-link" />
+                <asp:Button ID="btnDashboard" runat="server" Text="Dashboard" OnClick="btnDashboard_Click" CssClass="button-link" />
             </div>
         </header>
         <div class="layout">

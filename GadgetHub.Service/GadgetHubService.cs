@@ -789,5 +789,75 @@ namespace GadgetHub.Service
             return messages;
         }
 
+        public List<OrderDTO> GetOrdersByUserId(int userId)
+        {
+            List<OrderDTO> orders = new List<OrderDTO>();
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                // Get orders for the specific user
+                string orderQuery = @"
+            SELECT Id, UserId, Total, DeliveryAddress, Status, CreatedAt
+            FROM [Order]
+            WHERE UserId = @UserId
+            ORDER BY CreatedAt DESC";
+
+                using (SqlCommand cmd = new SqlCommand(orderQuery, conn))
+                {
+                    cmd.Parameters.AddWithValue("@UserId", userId);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            orders.Add(new OrderDTO
+                            {
+                                Id = reader.GetInt32(0),
+                                UserId = reader.GetInt32(1),
+                                Total = reader.GetInt32(2),
+                                DeliveryAddress = reader.GetString(3),
+                                Status = reader.GetString(4),
+                                CreatedAt = reader.GetDateTime(5),
+                                Items = new List<OrderItemDTO>()
+                            });
+                        }
+                    }
+                }
+
+                // Get items for each order
+                string itemsQuery = @"
+            SELECT oi.OrderId, oi.ProductId, p.Name, oi.Qty
+            FROM Order_Items oi
+            INNER JOIN Product p ON oi.ProductId = p.Id
+            WHERE oi.OrderId = @OrderId";
+
+                using (SqlCommand cmd = new SqlCommand(itemsQuery, conn))
+                {
+                    foreach (var order in orders)
+                    {
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.AddWithValue("@OrderId", order.Id);
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                order.Items.Add(new OrderItemDTO
+                                {
+                                    ProductId = reader.GetInt32(1),
+                                    ProductName = reader.GetString(2),
+                                    Qty = reader.GetInt32(3)
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+
+            return orders;
+        }
+
     }
 }

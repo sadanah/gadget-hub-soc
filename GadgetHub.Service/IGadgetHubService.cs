@@ -56,6 +56,10 @@ namespace GadgetHub.Service
 
         [OperationContract]
         List<ContactMessageDTO> GetAllContactMessages();
+
+        [OperationContract]
+        List<OrderDTO> GetOrdersByUserId(int userId);
+
     }
 }
 
