@@ -36,7 +36,7 @@ namespace GadgetHub.Web
                 }
                 else if (user.Role == "distributor")
                 {
-                    Response.Redirect("GHCustomer/HomePage.aspx");
+                    Response.Redirect("GHDistributor/DashboardDistributor.aspx");
                 }
                 else
                 {

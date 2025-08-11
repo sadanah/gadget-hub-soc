@@ -859,5 +859,230 @@ namespace GadgetHub.Service
             return orders;
         }
 
+        public List<OrderDTO> GetOrdersForDistributor(int distributorId)
+        {
+            List<OrderDTO> orders = new List<OrderDTO>();
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                // Get orders that have order items with products by this distributor
+                string query = @"
+            SELECT DISTINCT o.Id, o.UserId, u.Username, o.Total, o.DeliveryAddress, o.Status, o.CreatedAt
+            FROM [Order] o
+            JOIN Users u ON o.UserId = u.Id
+            JOIN Order_Items oi ON o.Id = oi.OrderId
+            JOIN Product p ON oi.ProductId = p.Id
+            WHERE p.DistributorId = @DistributorId
+            ORDER BY o.CreatedAt DESC";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@DistributorId", distributorId);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            orders.Add(new OrderDTO
+                            {
+                                Id = reader.GetInt32(0),
+                                UserId = reader.GetInt32(1),
+                                UserName = reader.GetString(2),
+                                Total = reader.GetInt32(3),
+                                DeliveryAddress = reader.GetString(4),
+                                Status = reader.GetString(5),
+                                CreatedAt = reader.GetDateTime(6),
+                                Items = new List<OrderItemDTO>()
+                            });
+                        }
+                    }
+                }
+
+                // Load order items for each order
+                foreach (var order in orders)
+                {
+                    string itemsQuery = @"
+                SELECT oi.ProductId, p.Name, oi.Qty
+                FROM Order_Items oi
+                JOIN Product p ON oi.ProductId = p.Id
+                WHERE oi.OrderId = @OrderId";
+
+                    using (SqlCommand cmd = new SqlCommand(itemsQuery, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@OrderId", order.Id);
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                order.Items.Add(new OrderItemDTO
+                                {
+                                    ProductId = reader.GetInt32(0),
+                                    ProductName = reader.GetString(1),
+                                    Qty = reader.GetInt32(2)
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+
+            return orders;
+        }
+
+        public bool UpdateOrderStatus(int orderId, string newStatus)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                string updateQuery = "UPDATE [Order] SET Status = @Status WHERE Id = @OrderId";
+
+                using (SqlCommand cmd = new SqlCommand(updateQuery, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Status", newStatus);
+                    cmd.Parameters.AddWithValue("@OrderId", orderId);
+
+                    int rows = cmd.ExecuteNonQuery();
+                    return rows > 0;
+                }
+            }
+        }
+
+        public List<QuotationDTO> GetQuotationsByDistributor(int distributorId)
+        {
+            var quotations = new List<QuotationDTO>();
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                // Get quotations for distributor
+                string qQuery = @"
+                SELECT Id, DistributorId, Status, CreatedAt 
+                FROM Quotation
+                WHERE DistributorId = @DistributorId";
+
+                using (SqlCommand cmd = new SqlCommand(qQuery, conn))
+                {
+                    cmd.Parameters.AddWithValue("@DistributorId", distributorId);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            quotations.Add(new QuotationDTO
+                            {
+                                QuotationId = reader.GetInt32(0),
+                                DistributorId = reader.GetInt32(1),
+                                Status = reader.GetString(2),
+                                CreatedAt = reader.GetDateTime(3),
+                                Items = new List<QuotationItemDTO>()
+                            });
+                        }
+                    }
+                }
+
+                // For each quotation, get its items
+                foreach (var quote in quotations)
+                {
+                    string iQuery = @"
+                    SELECT qi.ProductId, p.Name, qi.Qty, qi.Price
+                    FROM QuotationItem qi
+                    INNER JOIN Product p ON qi.ProductId = p.Id
+                    WHERE qi.QuotationId = @QuotationId
+                    AND p.DistributorId = @DistributorId";  // ensure only products sold by distributor
+
+                    using (SqlCommand cmd = new SqlCommand(iQuery, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@QuotationId", quote.QuotationId);
+                        cmd.Parameters.AddWithValue("@DistributorId", distributorId);
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                quote.Items.Add(new QuotationItemDTO
+                                {
+                                    ProductId = reader.GetInt32(0),
+                                    ProductName = reader.GetString(1),
+                                    Quantity = reader.GetInt32(2),
+                                    Price = reader.GetDecimal(3)
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+
+            return quotations;
+        }
+
+        public bool UpdateQuotationItem(int quotationId, int productId, int quantity, decimal price)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                string updateQuery = @"
+                UPDATE QuotationItem
+                SET Qty = @Qty,
+                    Price = @Price
+                WHERE QuotationId = @QuotationId
+                  AND ProductId = @ProductId";
+
+                using (SqlCommand cmd = new SqlCommand(updateQuery, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Qty", quantity);
+                    cmd.Parameters.AddWithValue("@Price", price);
+                    cmd.Parameters.AddWithValue("@QuotationId", quotationId);
+                    cmd.Parameters.AddWithValue("@ProductId", productId);
+
+                    int rows = cmd.ExecuteNonQuery();
+                    return rows > 0;
+                }
+            }
+        }
+
+        public ContactMessageDTO[] GetMessagesByUser(int userId)
+        {
+            List<ContactMessageDTO> messages = new List<ContactMessageDTO>();
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                string query = @"
+            SELECT Id, Timestamp, Subject, Message, UserId
+            FROM Contact_Messages
+            WHERE UserId = @UserId
+            ORDER BY Timestamp DESC";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@UserId", userId);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            messages.Add(new ContactMessageDTO
+                            {
+                                Id = reader.GetInt32(0),
+                                Timestamp = reader.GetDateTime(1),
+                                Subject = reader.GetString(2),
+                                Message = reader.GetString(3),
+                                UserId = reader.GetInt32(4)
+                            });
+                        }
+                    }
+                }
+            }
+
+            return messages.ToArray();
+        }
+
+
     }
 }
