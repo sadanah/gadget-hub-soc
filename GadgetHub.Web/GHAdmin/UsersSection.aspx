@@ -4,6 +4,111 @@
 <html>
 <head runat="server">
     <title>Users List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f8f9fa;
+        }
+
+        /* Container for filters */
+        form > *:not(table) {
+            margin-bottom: 15px;
+        }
+
+        /* Style for dropdown and textbox */
+        select, input[type="text"], .aspNetDisabled {
+            padding: 8px 12px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+        select:focus, input[type="text"]:focus {
+            border-color: #2980b9;
+            outline: none;
+        }
+
+        /* Style for buttons */
+        input[type="submit"], button, asp\\:Button {
+            background-color: #2980b9;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            font-size: 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            vertical-align: middle;
+        }
+        input[type="submit"]:hover, button:hover, asp\\:Button:hover {
+            background-color: #3498db;
+        }
+
+        /* GridView table styling */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 1px solid #ccc;
+            vertical-align: middle;
+        }
+
+        /* Header row */
+        thead th {
+            background-color: #2980b9;
+            color: white;
+            font-weight: normal;
+            border-bottom: 2px solid #1c5980;
+        }
+
+        /* Rounded corners on header */
+        thead th:first-child {
+            border-top-left-radius: 8px;
+        }
+        thead th:last-child {
+            border-top-right-radius: 8px;
+        }
+
+        /* Zebra striping on rows */
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        /* Hover highlight for rows */
+        tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Status text styling */
+        .status-active {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        .status-inactive {
+            color: #c0392b;
+            font-weight: bold;
+        }
+
+        /* Action button styling inside GridView */
+        .aspNetButton {
+            padding: 6px 12px;
+            font-size: 13px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
