@@ -48,25 +48,13 @@ namespace GadgetHub.Service
         public string Name { get; set; }
 
         [DataMember]
-        public string Description { get; set; }
-
-        [DataMember]
         public int Price { get; set; }
 
         [DataMember]
         public string Image { get; set; }
 
         [DataMember]
-        public int Stock { get; set; }
-
-        [DataMember]
         public int CategoryId { get; set; }
-
-        [DataMember]
-        public int DistributorId { get; set; }
-
-        [DataMember]
-        public int IsActive { get; set; }
     }
 
     [DataContract]
@@ -87,64 +75,6 @@ namespace GadgetHub.Service
         [DataMember]
         public int Qty { get; set; }
     }
-
-    // QuotationDTO.cs
-    [DataContract]
-    public class QuotationDTO
-    {
-        [DataMember]
-        public int? QuotationId { get; set; }
-
-        [DataMember]
-        public int? DistributorId { get; set; }
-
-        [DataMember]
-        public string Status { get; set; }
-
-        [DataMember]
-        public DateTime? CreatedAt { get; set; }
-
-        [DataMember]
-        public List<QuotationItemDTO> Items { get; set; }
-    }
-
-    // QuotationItemDTO.cs
-    [DataContract]
-    public class QuotationItemDTO
-    {
-        [DataMember]
-        public int ProductId { get; set; }
-
-        [DataMember]
-        public string ProductName { get; set; }
-
-        [DataMember]
-        public int Quantity { get; set; }
-
-        [DataMember]
-        public decimal Price { get; set; }  // price per item
-
-        [IgnoreDataMember]
-        public decimal Total => Price * Quantity;  // optional, for convenience
-    }
-
-    // DistributorDTO.cs
-    [DataContract]
-    public class DistributorDTO
-    {
-        [DataMember]
-        public int Id { get; set; }
-
-        [DataMember]
-        public string Name { get; set; }
-
-        [DataMember]
-        public string Email { get; set; }
-
-        [DataMember]
-        public string PhoneNumber { get; set; }
-    }
-
 
 
     public class GadgetHubService : IGadgetHubService
@@ -506,179 +436,6 @@ namespace GadgetHub.Service
 
                 updateCmd.ExecuteNonQuery();
             }
-        }
-
-        public List<ProductDTO> GetAllProducts()
-        {
-            List<ProductDTO> products = new List<ProductDTO>();
-
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                conn.Open();
-                string query = "SELECT Id, Name, Description, Price, Image, Stock, CategoryId, DistributorId, IsActive FROM Product";
-                using (SqlCommand cmd = new SqlCommand(query, conn))
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        products.Add(new ProductDTO
-                        {
-                            Id = reader.GetInt32(0),
-                            Name = reader.GetString(1),
-                            Description = reader.GetString(2),
-                            Price = reader.GetInt32(3),
-                            Image = reader.GetString(4),
-                            Stock = reader.GetInt32(5),
-                            CategoryId = reader.GetInt32(6),
-                            DistributorId = reader.GetInt32(6),
-                            IsActive = reader.GetInt32(7)
-                        });
-                    }
-                }
-            }
-
-            return products;
-        }
-
-        public List<DistributorDTO> GetAllDistributors()
-        {
-            List<DistributorDTO> distributors = new List<DistributorDTO>();
-
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                conn.Open();
-                string query = "SELECT Id, Username, Email, PhoneNumber FROM Users WHERE Role='distributor'";
-                using (SqlCommand cmd = new SqlCommand(query, conn))
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        distributors.Add(new DistributorDTO
-                        {
-                            Id = reader.GetInt32(0),                // Maps to 'Id'
-                            Name = reader.GetString(1),             // Maps to 'Username'
-                            Email = reader.GetString(2),            // Maps to 'Email'
-                            PhoneNumber = reader.GetString(3)       // Maps to 'PhoneNumber'
-                        });
-                    }
-                }
-            }
-
-            return distributors;
-        }
-
-        public bool CreateQuotation(int distributorId, QuotationItemDTO[] items)
-        {
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                conn.Open();
-                SqlTransaction transaction = conn.BeginTransaction();
-
-                try
-                {
-                    // Insert into Quotations
-                    string insertQuotation = "INSERT INTO Quotation (DistributorId, CreatedAt) OUTPUT INSERTED.Id VALUES (@DistributorId, @CreatedAt)";
-                    SqlCommand cmdQuotation = new SqlCommand(insertQuotation, conn, transaction);
-                    cmdQuotation.Parameters.AddWithValue("@DistributorId", distributorId);
-                    cmdQuotation.Parameters.AddWithValue("@CreatedAt", DateTime.Now);
-                    int quotationId = (int)cmdQuotation.ExecuteScalar();
-
-                    // Insert each item
-                    foreach (var item in items)
-                    {
-                        string insertItem = @"INSERT INTO QuotationItem (QuotationId, ProductId, Qty, Price) 
-                                      VALUES (@QuotationId, @ProductId, @Quantity, @Price)";
-                        SqlCommand cmdItem = new SqlCommand(insertItem, conn, transaction);
-                        cmdItem.Parameters.AddWithValue("@QuotationId", quotationId);
-                        cmdItem.Parameters.AddWithValue("@ProductId", item.ProductId);
-                        cmdItem.Parameters.AddWithValue("@Quantity", item.Quantity);
-                        cmdItem.Parameters.AddWithValue("@Price", item.Price);
-                        cmdItem.ExecuteNonQuery();
-                    }
-
-                    transaction.Commit();
-                    return true;
-                }
-                catch
-                {
-                    transaction.Rollback();
-                    return false;
-                }
-            }
-        }
-
-        public List<QuotationDTO> GetAllQuotations()
-        {
-            List<QuotationDTO> quotations = new List<QuotationDTO>();
-
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                conn.Open();
-
-                // Get quotation headers
-                string qQuery = "SELECT Id, DistributorId, Status, CreatedAt FROM Quotation";
-                using (SqlCommand cmd = new SqlCommand(qQuery, conn))
-                //using (SqlDataReader reader = cmd.ExecuteReader())
-                //{
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    if (reader.HasRows)
-                    {
-                        while (reader.Read())
-                        {
-                            quotations.Add(new QuotationDTO
-                            {
-                                QuotationId = reader.IsDBNull(0) ? (int?)null : Convert.ToInt32(reader[0]),
-                                DistributorId = reader.IsDBNull(1) ? (int?)null : Convert.ToInt32(reader[1]),
-                                Status = reader.IsDBNull(2) ? null : Convert.ToString(reader[2]),
-                                CreatedAt = reader.IsDBNull(3) ? (DateTime?)null : reader.GetDateTime(3),
-                                Items = new List<QuotationItemDTO>()
-                            });
-                        }
-                    }
-                    else
-                    {
-                        // Add a placeholder row with nulls
-                        quotations.Add(new QuotationDTO
-                        {
-                            QuotationId = null,
-                            DistributorId = null,
-                            Status = null,
-                            CreatedAt = null,
-                            Items = new List<QuotationItemDTO>()
-                        });
-                    }
-                }
-
-                // Get quotation items
-                foreach (var quote in quotations)
-                {
-                    string iQuery = @"SELECT qi.ProductId, p.Name, qi.Qty, qi.Price 
-                              FROM QuotationItem qi 
-                              JOIN Product p ON qi.ProductId = p.Id
-                              WHERE qi.QuotationId = @QuotationId";
-
-                    using (SqlCommand cmd = new SqlCommand(iQuery, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@QuotationId", quote.QuotationId);
-                        using (SqlDataReader reader = cmd.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                quote.Items.Add(new QuotationItemDTO
-                                {
-                                    ProductId = reader.GetInt32(0),
-                                    ProductName = reader.GetString(1),
-                                    Quantity = reader.GetInt32(2),
-                                    Price = reader.GetDecimal(3)
-                                });
-                            }
-                        }
-                    }
-                }
-            }
-
-            return quotations;
         }
 
     }

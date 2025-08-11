@@ -45,18 +45,6 @@ namespace GadgetHub.Service
         [OperationContract]
         void ToggleUserStatus(int userId);
 
-        [OperationContract]
-        bool CreateQuotation(int distributorId, QuotationItemDTO[] items);
-
-        [OperationContract]
-        List<DistributorDTO> GetAllDistributors();
-
-        [OperationContract]
-        List<ProductDTO> GetAllProducts();
-
-        [OperationContract]
-        List<QuotationDTO> GetAllQuotations();
-
     }
 }
 
