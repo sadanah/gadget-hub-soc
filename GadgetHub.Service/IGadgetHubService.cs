@@ -50,6 +50,12 @@ namespace GadgetHub.Service
 
         [OperationContract]
         List<ProductDTO> GetAllProducts(string searchTerm, int[] categoryIds, int? isActive);
+
+        [OperationContract]
+        List<OrderDTO> GetAllOrders();
+
+        [OperationContract]
+        List<ContactMessageDTO> GetAllContactMessages();
     }
 }
 

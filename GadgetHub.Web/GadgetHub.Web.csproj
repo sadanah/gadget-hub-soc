@@ -90,7 +90,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="GHAdmin\ContactsSection.aspx" />
     <Content Include="GHAdmin\DashboardAdmin.aspx" />
+    <Content Include="GHAdmin\OrdersSection.aspx" />
+    <Content Include="GHAdmin\ProductsSection.aspx" />
     <Content Include="GHAdmin\QuotationsSection.aspx" />
     <Content Include="GHAdmin\UsersSection.aspx" />
     <Content Include="GHCustomer\CartPage.aspx" />
@@ -118,6 +121,12 @@
     <Content Include="Connected Services\GHServiceRef\GadgetHub.Web.GHServiceRef.QuotationDTO.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <Content Include="Connected Services\GHServiceRef\GadgetHub.Web.GHServiceRef.OrderDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GHServiceRef\GadgetHub.Web.GHServiceRef.ContactMessageDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Connected Services\GHServiceRef\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -130,12 +139,33 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GHAdmin\ContactsSection.aspx.cs">
+      <DependentUpon>ContactsSection.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GHAdmin\ContactsSection.aspx.designer.cs">
+      <DependentUpon>ContactsSection.aspx</DependentUpon>
+    </Compile>
     <Compile Include="GHAdmin\DashboardAdmin.aspx.cs">
       <DependentUpon>DashboardAdmin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="GHAdmin\DashboardAdmin.aspx.designer.cs">
       <DependentUpon>DashboardAdmin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GHAdmin\OrdersSection.aspx.cs">
+      <DependentUpon>OrdersSection.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GHAdmin\OrdersSection.aspx.designer.cs">
+      <DependentUpon>OrdersSection.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GHAdmin\ProductsSection.aspx.cs">
+      <DependentUpon>ProductsSection.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GHAdmin\ProductsSection.aspx.designer.cs">
+      <DependentUpon>ProductsSection.aspx</DependentUpon>
     </Compile>
     <Compile Include="GHAdmin\QuotationsSection.aspx.cs">
       <DependentUpon>QuotationsSection.aspx</DependentUpon>

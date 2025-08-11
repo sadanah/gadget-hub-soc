@@ -127,6 +127,53 @@ namespace GadgetHub.Service
         public decimal Total => Price * Quantity;  // optional, for convenience
     }
 
+    public class OrderDTO
+    {
+        [DataMember]
+        public int? Id { get; set; }
+        [DataMember]
+        public int? UserId { get; set; }
+        [DataMember]
+        public string UserName { get; set; }           // From Users table (e.g., Username)
+        [DataMember]
+        public int? Total { get; set; }
+        [DataMember]
+        public string DeliveryAddress { get; set; }
+        [DataMember]
+        public string Status { get; set; }
+        [DataMember]
+        public DateTime? CreatedAt { get; set; }
+        [DataMember]
+        public List<OrderItemDTO> Items { get; set; } = new List<OrderItemDTO>();
+    }
+
+    public class OrderItemDTO
+    {
+        [DataMember]
+        public int? ProductId { get; set; }
+        [DataMember]
+        public string ProductName { get; set; }        // From Product table
+        [DataMember]
+        public int? Qty { get; set; }
+    }
+
+    public class ContactMessageDTO
+    {
+        [DataMember]
+        public int? Id { get; set; }
+        [DataMember]
+        public DateTime? Timestamp { get; set; }
+        [DataMember]
+        public string Subject { get; set; }
+        [DataMember]
+        public string Message { get; set; }
+        [DataMember]
+        public int? UserId { get; set; }
+        [DataMember]
+        public string UserName { get; set; } // Username from Users table
+    }
+
+
     public class GadgetHubService : IGadgetHubService
     {
         private readonly string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\SOC\\GadgetHub\\GadgetHubDB.mdf;Integrated Security=True;Connect Timeout=30;Encrypt=False";
@@ -632,6 +679,114 @@ namespace GadgetHub.Service
             }
 
             return products;
+        }
+
+        public List<OrderDTO> GetAllOrders()
+        {
+            List<OrderDTO> orders = new List<OrderDTO>();
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                // Step 1: Query orders with user info
+                string orderQuery = @"
+            SELECT 
+                o.Id, o.UserId, u.Username, o.Total, o.DeliveryAddress, o.Status, o.CreatedAt
+            FROM [Order] o
+            INNER JOIN Users u ON o.UserId = u.Id
+            ORDER BY o.CreatedAt DESC";
+
+                using (SqlCommand cmd = new SqlCommand(orderQuery, conn))
+                {
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            orders.Add(new OrderDTO
+                            {
+                                Id = reader.GetInt32(0),
+                                UserId = reader.GetInt32(1),
+                                UserName = reader.IsDBNull(2) ? null : reader.GetString(2),
+                                Total = reader.GetInt32(3),
+                                DeliveryAddress = reader.GetString(4),
+                                Status = reader.GetString(5),
+                                CreatedAt = reader.GetDateTime(6),
+                                Items = new List<OrderItemDTO>()
+                            });
+                        }
+                    }
+                }
+
+                // Step 2: For each order, load order items with product names
+                string itemsQuery = @"
+            SELECT oi.OrderId, oi.ProductId, p.Name, oi.Qty
+            FROM Order_Items oi
+            INNER JOIN Product p ON oi.ProductId = p.Id
+            WHERE oi.OrderId = @OrderId";
+
+                using (SqlCommand cmd = new SqlCommand(itemsQuery, conn))
+                {
+                    foreach (var order in orders)
+                    {
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.AddWithValue("@OrderId", order.Id);
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                order.Items.Add(new OrderItemDTO
+                                {
+                                    ProductId = reader.GetInt32(1),
+                                    ProductName = reader.GetString(2),
+                                    Qty = reader.GetInt32(3)
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+
+            return orders;
+        }
+
+        public List<ContactMessageDTO> GetAllContactMessages()
+        {
+            List<ContactMessageDTO> messages = new List<ContactMessageDTO>();
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                string query = @"
+            SELECT 
+                cm.Id, cm.Timestamp, cm.Subject, cm.Message, cm.UserId, u.Username
+            FROM Contact_Messages cm
+            INNER JOIN Users u ON cm.UserId = u.Id
+            ORDER BY cm.Timestamp DESC";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            messages.Add(new ContactMessageDTO
+                            {
+                                Id = reader.GetInt32(0),
+                                Timestamp = reader.GetDateTime(1),
+                                Subject = reader.GetString(2),
+                                Message = reader.GetString(3),
+                                UserId = reader.GetInt32(4),
+                                UserName = reader.IsDBNull(5) ? null : reader.GetString(5)
+                            });
+                        }
+                    }
+                }
+            }
+
+            return messages;
         }
 
     }
