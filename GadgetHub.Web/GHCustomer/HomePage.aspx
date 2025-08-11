@@ -266,8 +266,7 @@
                     <ItemTemplate>
                         <div class="product-card">
                             <a href='<%# "ProductDetails.aspx?id=" + Eval("Id") %>' style="text-decoration:none; color:inherit;">
-                                <img src='<%# Eval("Image") %>' alt='<%# Eval("Name") %>' style="width:100%; height:150px; object-fit:contain;" />
-                                <h4><%# Eval("Name") %></h4>
+                                <img src='<%# ResolveUrl("~/Images/" + Eval("Image")) %>' alt='<%# Eval("Name") %>' style="width:100%; height:150px; object-fit:contain;" />
                                 <p>Price: LKR <%# Eval("Price") %></p>
                             </a>
                             <asp:Button ID="btnAddToCart" runat="server" CommandArgument='<%# Eval("Id") %>' Text="Add to Cart" OnClick="btnAddToCart_Click" />

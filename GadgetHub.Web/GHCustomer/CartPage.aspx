@@ -38,8 +38,9 @@
             border-bottom: none;
         }
         .cart-item img {
-            width: 100px;
+            max-width: 300px;
             height: 100px;
+            margin-right: 50px;
             object-fit: contain;
             border-radius: 8px;
             box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
@@ -138,7 +139,7 @@
             <asp:Repeater ID="rptCartItems" runat="server">
                 <ItemTemplate>
                     <div class="cart-item">
-                        <img src='<%# Eval("Image") %>' alt='<%# Eval("ProductName") %>' style="width:100px; height:100px; object-fit:contain;" />
+                        <img src='<%# ResolveUrl("~/Images/" + Eval("Image")) %>' style="width:100%; height:150px; object-fit:contain;" />
                         <div class="cart-details">
                             <h3><%# Eval("ProductName") %></h3>
                             <p>Price: LKR <%# Eval("Price") %></p>
