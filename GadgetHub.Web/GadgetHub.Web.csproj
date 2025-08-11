@@ -132,6 +132,10 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <Content Include="GHCustomer\DashboardCustomer.aspx" />
+    <Content Include="GHDistributor\DashboardDistributor.aspx" />
+    <Content Include="GHDistributor\MessagesSection.aspx" />
+    <Content Include="GHDistributor\OrdersSection.aspx" />
+    <Content Include="GHDistributor\QuotationsSection.aspx" />
     <Content Include="Global.asax" />
     <Content Include="GHCustomer\HomePage.aspx" />
     <Content Include="Login.aspx" />
@@ -208,6 +212,34 @@
     <Compile Include="GHCustomer\DashboardCustomer.aspx.designer.cs">
       <DependentUpon>DashboardCustomer.aspx</DependentUpon>
     </Compile>
+    <Compile Include="GHDistributor\DashboardDistributor.aspx.cs">
+      <DependentUpon>DashboardDistributor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GHDistributor\DashboardDistributor.aspx.designer.cs">
+      <DependentUpon>DashboardDistributor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GHDistributor\MessagesSection.aspx.cs">
+      <DependentUpon>MessagesSection.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GHDistributor\MessagesSection.aspx.designer.cs">
+      <DependentUpon>MessagesSection.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GHDistributor\OrdersSection.aspx.cs">
+      <DependentUpon>OrdersSection.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GHDistributor\OrdersSection.aspx.designer.cs">
+      <DependentUpon>OrdersSection.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GHDistributor\QuotationsSection.aspx.cs">
+      <DependentUpon>QuotationsSection.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GHDistributor\QuotationsSection.aspx.designer.cs">
+      <DependentUpon>QuotationsSection.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -259,7 +291,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="GHDistributor\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
