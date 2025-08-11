@@ -33,11 +33,6 @@
             color: white;
         }
 
-        .grid-header {
-            background-color: #2980b9 !important;
-            color: white !important;
-        }
-
         th, td {
             padding: 12px 15px;
             text-align: left;

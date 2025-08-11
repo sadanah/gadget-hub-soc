@@ -4,6 +4,71 @@
 <html>
 <head runat="server">
     <title>Quotations List</title>
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 30px;
+    }
+
+    th, td {
+        border: 1px solid #ccc; /* consistent border color */
+        padding: 10px 12px;
+        text-align: left;
+        vertical-align: middle;
+    }
+
+    th {
+        background-color: #2980b9; /* darker blue header */
+        color: white;
+        font-weight: normal;
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: #f9f9f9; /* zebra stripes */
+    }
+
+    tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    input[type="number"], input[type="text"] {
+        width: 80px;
+        padding: 6px 8px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        font-size: 14px;
+        transition: border-color 0.3s ease;
+    }
+
+    input[type="number"]:focus, input[type="text"]:focus {
+        border-color: #2980b9;
+        outline: none;
+    }
+
+    .btn-update {
+        background-color: #27ae60; /* green */
+        color: white;
+        border: none;
+        padding: 8px 14px;
+        cursor: pointer;
+        border-radius: 4px;
+        font-size: 14px;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-update:hover {
+        background-color: #2ecc71;
+    }
+</style>
+
+
 </head>
 <body>
     <form id="form1" runat="server">

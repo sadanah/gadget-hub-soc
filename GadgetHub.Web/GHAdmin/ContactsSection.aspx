@@ -4,6 +4,76 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Contact Messages</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+
+    div {
+        margin-bottom: 10px;
+    }
+
+    input[type="text"], input[type="search"], textarea {
+        padding: 6px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: 250px;
+        box-sizing: border-box;
+    }
+
+    input[type="button"], input[type="submit"], button, asp\:Button {
+        background-color: #2980b9;
+        border: none;
+        color: white;
+        padding: 7px 14px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 14px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    input[type="button"]:hover, input[type="submit"]:hover, button:hover, asp\:Button:hover {
+        background-color: #3498db;
+    }
+
+    asp\:GridView, table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 15px;
+    }
+
+    asp\:GridView th, asp\:GridView td, table th, table td {
+        border: 1px solid #ccc;
+        padding: 10px 12px;
+        text-align: left;
+        vertical-align: middle;
+    }
+
+    asp\:GridView th, table th {
+        background-color: #2980b9;
+        color: white;
+        font-weight: normal;
+    }
+
+    asp\:GridView tr:nth-child(even), table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    asp\:GridView tr:hover, table tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    asp\:GridView .emptydatatext {
+        font-style: italic;
+        color: #666;
+        padding: 10px;
+    }
+</style>
+
 </head>
 <body>
     <form id="form1" runat="server">
