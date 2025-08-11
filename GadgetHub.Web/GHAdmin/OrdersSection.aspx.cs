@@ -80,5 +80,16 @@ namespace GadgetHub.Web.GHAdmin
                 }
             }
         }
+        protected void gvOrders_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "UpdateStatus")
+            {
+                // Example: get the order ID
+                int orderId = Convert.ToInt32(e.CommandArgument);
+
+                // TODO: update order status here
+            }
+        }
+
     }
 }

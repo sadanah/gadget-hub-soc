@@ -5,17 +5,102 @@
 <head runat="server">
     <title>Orders Section</title>
     <style>
-        /* Simple styling for nested order items */
-        .order-items {
-            margin-left: 20px;
-            font-size: 0.9em;
-        }
-        .order-items th, .order-items td {
-            padding: 3px 6px;
-        }
-        .order-items th {
-            background-color: #f0f0f0;
-        }
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background: #f8f9fa;
+}
+/* General table styling */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+}
+
+/* Blue header like other tables */
+thead th,
+.grid-header {
+    background-color: #2980b9 !important; /* or #007BFF for Bootstrap blue */
+    color: white !important;
+    font-weight: normal;
+    border-bottom: 2px solid #1c5980;
+}
+
+/* Rounded corners on thead */
+thead th:first-child {
+    border-top-left-radius: 8px;
+}
+thead th:last-child {
+    border-top-right-radius: 8px;
+}
+
+/* Table cell padding and borders */
+th, td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+    vertical-align: middle;
+    font-size: 14px;
+}
+
+/* Zebra striping */
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Hover effect */
+tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Status dropdown style */
+.status-select {
+    width: 140px;
+    padding: 6px 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+.status-select:hover,
+.status-select:focus {
+    border-color: #2980b9;
+    outline: none;
+}
+
+/* Update button style */
+.update-btn {
+    padding: 6px 12px;
+    background-color: #2980b9;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background-color 0.3s ease;
+}
+.update-btn:hover {
+    background-color: #3498db;
+}
+.orders-grid th {
+    background-color: #2980b9 !important;
+    color: white !important;
+    font-weight: 600;
+}
+
+.orders-grid th:first-child {
+    border-top-left-radius: 8px;
+}
+.orders-grid th:last-child {
+    border-top-right-radius: 8px;
+}
+
     </style>
 </head>
 <body>
@@ -29,7 +114,8 @@
 
         <br />
 
-        <asp:GridView ID="gvOrders" runat="server" AutoGenerateColumns="false" EmptyDataText="No orders found" OnRowDataBound="gvOrders_RowDataBound">
+        <asp:GridView ID="gvOrders" runat="server" AutoGenerateColumns="false" OnRowDataBound="gvOrders_RowDataBound" CssClass="orders-grid" UseAccessibleHeader="true" HeaderStyle-CssClass="grid-header">
+
             <Columns>
                 <asp:BoundField DataField="Id" HeaderText="Order ID" />
                 <asp:BoundField DataField="UserName" HeaderText="User" />
