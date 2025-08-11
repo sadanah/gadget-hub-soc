@@ -30,7 +30,7 @@ namespace GadgetHub.Web.GHAdmin
             if (!string.IsNullOrEmpty(search))
             {
                 filtered = filtered.Where(q =>
-                    q.DistributorName.Contains(search, StringComparison.OrdinalIgnoreCase) ||
+                    (q.DistributorName != null && q.DistributorName.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0) ||
                     q.DistributorId.ToString() == search);
             }
 

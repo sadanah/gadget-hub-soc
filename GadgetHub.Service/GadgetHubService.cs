@@ -87,7 +87,7 @@ namespace GadgetHub.Service
         public int? DistributorId { get; set; }
 
         [DataMember]
-        public int? DistributorName { get; set; }
+        public string DistributorName { get; set; }
 
         [DataMember]
         public string Status { get; set; }
@@ -489,7 +489,15 @@ namespace GadgetHub.Service
                 conn.Open();
 
                 // Get quotation headers
-                string qQuery = "SELECT Id, DistributorId, Status, CreatedAt FROM Quotation";
+                string qQuery = @"
+                    SELECT 
+                        q.Id, 
+                        q.DistributorId, 
+                        q.Status, 
+                        q.CreatedAt,
+                        u.Username
+                    FROM Quotation q
+                    LEFT JOIN Users u ON q.DistributorId = u.Id";
                 using (SqlCommand cmd = new SqlCommand(qQuery, conn))
                 //using (SqlDataReader reader = cmd.ExecuteReader())
                 //{
@@ -505,6 +513,7 @@ namespace GadgetHub.Service
                                 DistributorId = reader.IsDBNull(1) ? (int?)null : reader.GetInt32(1),
                                 Status = reader.IsDBNull(2) ? null : reader.GetString(2),
                                 CreatedAt = reader.IsDBNull(3) ? (DateTime?)null : reader.GetDateTime(3),
+                                DistributorName = reader.IsDBNull(4) ? null : reader.GetString(4),
                                 Items = new List<QuotationItemDTO>()
                             });
                         }
@@ -518,6 +527,7 @@ namespace GadgetHub.Service
                             DistributorId = null,
                             Status = null,
                             CreatedAt = null,
+                            DistributorName = null,
                             Items = new List<QuotationItemDTO>()
                         });
                     }
