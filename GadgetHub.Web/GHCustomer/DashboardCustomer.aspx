@@ -5,12 +5,13 @@
 <head runat="server">
     <title>My Orders</title>
     <style>
+        /* Reset & base */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f7f9fc;
-            color: #333;
-            margin: 20px;
+            margin: 0;
             padding: 0;
+            color: #333;
         }
 
         h2 {
@@ -93,21 +94,108 @@
             color: white;
             font-weight: 600;
         }
-        header { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background: #f0f0f0; }
-nav { width: 250px; padding: 20px; border-right: 1px solid #ddd; }
-main { flex-grow: 1; padding: 20px; }
-        .layout { display: flex; min-height: 80vh; }
-#cartArea { display: flex; align-items: center; gap: 15px; }
 
-.button-link {
-    background-color: #4CAF50;
-    color: white;
-    padding: 8px 16px;
-    text-decoration: none;
-    border-radius: 4px;
-}
-.button-link:hover {
-    cursor: pointer; 
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: #2980b9;
+            color: white;
+            box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        #companyName {
+            font-weight: 700;
+            font-size: 1.8em;
+            letter-spacing: 1px;
+            user-select: none;
+        }
+
+        /* Cart area */
+        #cartArea {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* Buttons in cart area */
+        .button-link {
+            background-color: #e67e22;
+            color: white;
+            padding: 8px 18px;
+            border-radius: 6px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .button-link:hover {
+            background-color: #d35400;
+        }
+
+        /* Layout */
+        .layout {
+            display: flex;
+            min-height: calc(100vh - 72px); /* header height approx */
+            background-color: #f7f9fc;
+        }
+
+        nav {
+            width: 240px;
+            background: white;
+            padding: 25px 20px;
+            border-right: 1px solid #d6dbe5;
+            box-shadow: 2px 0 6px rgb(0 0 0 / 0.05);
+            border-radius: 0 8px 8px 0;
+        }
+        nav h3 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #2980b9;
+            font-weight: 700;
+            user-select: none;
+        }
+        nav div {
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+        nav input[type="checkbox"] {
+            margin-right: 8px;
+            transform: scale(1.1);
+            cursor: pointer;
+        }
+        nav button {
+            margin-top: 10px;
+            width: 100%;
+            padding: 10px;
+            background-color: #2980b9;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        nav button:hover {
+            background-color: #3a7bd5;
+        }
+
+        main {
+            flex-grow: 1;
+            padding: 30px 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 25px;
+            overflow-y: auto;
+        }
 }
         /* Responsive */
         @media (max-width: 700px) {
