@@ -66,6 +66,16 @@ namespace GadgetHub.Service
         [OperationContract]
         bool UpdateOrderStatus(int orderId, string newStatus);
 
+        [OperationContract]
+        List<QuotationDTO> GetQuotationsByDistributor(int distributorId);
+
+        [OperationContract]
+        bool UpdateQuotationItem(int quotationId, int productId, int quantity, decimal price);
+
+        [OperationContract]
+        ContactMessageDTO[] GetMessagesByUser(int userId);
+        
+
     }
 }
 

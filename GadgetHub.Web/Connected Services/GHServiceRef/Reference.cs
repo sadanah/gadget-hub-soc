@@ -1239,6 +1239,24 @@ namespace GadgetHub.Web.GHServiceRef {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/UpdateOrderStatus", ReplyAction="http://tempuri.org/IGadgetHubService/UpdateOrderStatusResponse")]
         System.Threading.Tasks.Task<bool> UpdateOrderStatusAsync(int orderId, string newStatus);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/GetQuotationsByDistributor", ReplyAction="http://tempuri.org/IGadgetHubService/GetQuotationsByDistributorResponse")]
+        GadgetHub.Web.GHServiceRef.QuotationDTO[] GetQuotationsByDistributor(int distributorId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/GetQuotationsByDistributor", ReplyAction="http://tempuri.org/IGadgetHubService/GetQuotationsByDistributorResponse")]
+        System.Threading.Tasks.Task<GadgetHub.Web.GHServiceRef.QuotationDTO[]> GetQuotationsByDistributorAsync(int distributorId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/UpdateQuotationItem", ReplyAction="http://tempuri.org/IGadgetHubService/UpdateQuotationItemResponse")]
+        bool UpdateQuotationItem(int quotationId, int productId, int quantity, decimal price);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/UpdateQuotationItem", ReplyAction="http://tempuri.org/IGadgetHubService/UpdateQuotationItemResponse")]
+        System.Threading.Tasks.Task<bool> UpdateQuotationItemAsync(int quotationId, int productId, int quantity, decimal price);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/GetMessagesByUser", ReplyAction="http://tempuri.org/IGadgetHubService/GetMessagesByUserResponse")]
+        GadgetHub.Web.GHServiceRef.ContactMessageDTO[] GetMessagesByUser(int userId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/GetMessagesByUser", ReplyAction="http://tempuri.org/IGadgetHubService/GetMessagesByUserResponse")]
+        System.Threading.Tasks.Task<GadgetHub.Web.GHServiceRef.ContactMessageDTO[]> GetMessagesByUserAsync(int userId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1418,6 +1436,30 @@ namespace GadgetHub.Web.GHServiceRef {
         
         public System.Threading.Tasks.Task<bool> UpdateOrderStatusAsync(int orderId, string newStatus) {
             return base.Channel.UpdateOrderStatusAsync(orderId, newStatus);
+        }
+        
+        public GadgetHub.Web.GHServiceRef.QuotationDTO[] GetQuotationsByDistributor(int distributorId) {
+            return base.Channel.GetQuotationsByDistributor(distributorId);
+        }
+        
+        public System.Threading.Tasks.Task<GadgetHub.Web.GHServiceRef.QuotationDTO[]> GetQuotationsByDistributorAsync(int distributorId) {
+            return base.Channel.GetQuotationsByDistributorAsync(distributorId);
+        }
+        
+        public bool UpdateQuotationItem(int quotationId, int productId, int quantity, decimal price) {
+            return base.Channel.UpdateQuotationItem(quotationId, productId, quantity, price);
+        }
+        
+        public System.Threading.Tasks.Task<bool> UpdateQuotationItemAsync(int quotationId, int productId, int quantity, decimal price) {
+            return base.Channel.UpdateQuotationItemAsync(quotationId, productId, quantity, price);
+        }
+        
+        public GadgetHub.Web.GHServiceRef.ContactMessageDTO[] GetMessagesByUser(int userId) {
+            return base.Channel.GetMessagesByUser(userId);
+        }
+        
+        public System.Threading.Tasks.Task<GadgetHub.Web.GHServiceRef.ContactMessageDTO[]> GetMessagesByUserAsync(int userId) {
+            return base.Channel.GetMessagesByUserAsync(userId);
         }
     }
 }
