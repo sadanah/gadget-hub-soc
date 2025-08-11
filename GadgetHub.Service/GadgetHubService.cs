@@ -42,19 +42,27 @@ namespace GadgetHub.Service
     public class ProductDTO
     {
         [DataMember]
-        public int Id { get; set; }
-
+        public int? Id { get; set; }
         [DataMember]
         public string Name { get; set; }
-
         [DataMember]
-        public int Price { get; set; }
-
+        public string Description { get; set; }
+        [DataMember]
+        public int? Price { get; set; }
         [DataMember]
         public string Image { get; set; }
-
         [DataMember]
-        public int CategoryId { get; set; }
+        public int? Stock { get; set; }
+        [DataMember]
+        public int? CategoryId { get; set; }
+        [DataMember]
+        public string CategoryName { get; set; }
+        [DataMember]
+        public int? DistributorId { get; set; }
+        [DataMember]
+        public string DistributorName { get; set; }
+        [DataMember]
+        public int? IsActive { get; set; }
     }
 
     [DataContract]
@@ -563,5 +571,68 @@ namespace GadgetHub.Service
 
             return quotations;
         }
+
+        public List<ProductDTO> GetAllProducts(string searchTerm = null, int[] categoryIds = null, int? isActive = null)
+        {
+            List<ProductDTO> products = new List<ProductDTO>();
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                StringBuilder query = new StringBuilder(@"
+            SELECT 
+                p.Id, p.Name, p.Description, p.Price, p.Image, p.Stock,
+                p.CategoryId, c.Name AS CategoryName,
+                p.DistributorId, u.Username AS DistributorName,
+                p.IsActive
+            FROM Product p
+            LEFT JOIN Category c ON p.CategoryId = c.Id
+            LEFT JOIN Users u ON p.DistributorId = u.Id
+            WHERE 1=1 ");
+
+                if (!string.IsNullOrEmpty(searchTerm))
+                    query.Append(" AND p.Name LIKE @SearchTerm ");
+
+                if (categoryIds != null && categoryIds.Length > 0)
+                    query.Append($" AND p.CategoryId IN ({string.Join(",", categoryIds)}) ");
+
+                if (isActive.HasValue)
+                    query.Append(" AND p.IsActive = @IsActive ");
+
+                using (SqlCommand cmd = new SqlCommand(query.ToString(), conn))
+                {
+                    if (!string.IsNullOrEmpty(searchTerm))
+                        cmd.Parameters.AddWithValue("@SearchTerm", "%" + searchTerm + "%");
+
+                    if (isActive.HasValue)
+                        cmd.Parameters.AddWithValue("@IsActive", isActive.Value);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            products.Add(new ProductDTO
+                            {
+                                Id = reader.IsDBNull(0) ? (int?)null : reader.GetInt32(0),
+                                Name = reader.IsDBNull(1) ? null : reader.GetString(1),
+                                Description = reader.IsDBNull(2) ? null : reader.GetString(2),
+                                Price = reader.IsDBNull(3) ? (int?)null : reader.GetInt32(3),
+                                Image = reader.IsDBNull(4) ? null : reader.GetString(4),
+                                Stock = reader.IsDBNull(5) ? (int?)null : reader.GetInt32(5),
+                                CategoryId = reader.IsDBNull(6) ? (int?)null : reader.GetInt32(6),
+                                CategoryName = reader.IsDBNull(7) ? null : reader.GetString(7),
+                                DistributorId = reader.IsDBNull(8) ? (int?)null : reader.GetInt32(8),
+                                DistributorName = reader.IsDBNull(9) ? null : reader.GetString(9),
+                                IsActive = reader.IsDBNull(10) ? (int?)null : reader.GetInt32(10),
+                            });
+                        }
+                    }
+                }
+            }
+
+            return products;
+        }
+
     }
 }

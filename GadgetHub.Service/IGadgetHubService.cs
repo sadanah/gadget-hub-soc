@@ -47,6 +47,9 @@ namespace GadgetHub.Service
 
         [OperationContract]
         List<QuotationDTO> GetAllQuotations();
+
+        [OperationContract]
+        List<ProductDTO> GetAllProducts(string searchTerm, int[] categoryIds, int? isActive);
     }
 }
 

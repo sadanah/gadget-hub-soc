@@ -241,19 +241,37 @@ namespace GadgetHub.Web.GHServiceRef {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int CategoryIdField;
+        private System.Nullable<int> CategoryIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int IdField;
+        private string CategoryNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DescriptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> DistributorIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DistributorNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> IdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ImageField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> IsActiveField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string NameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int PriceField;
+        private System.Nullable<int> PriceField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> StockField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -266,7 +284,7 @@ namespace GadgetHub.Web.GHServiceRef {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int CategoryId {
+        public System.Nullable<int> CategoryId {
             get {
                 return this.CategoryIdField;
             }
@@ -279,7 +297,59 @@ namespace GadgetHub.Web.GHServiceRef {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Id {
+        public string CategoryName {
+            get {
+                return this.CategoryNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CategoryNameField, value) != true)) {
+                    this.CategoryNameField = value;
+                    this.RaisePropertyChanged("CategoryName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Description {
+            get {
+                return this.DescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
+                    this.DescriptionField = value;
+                    this.RaisePropertyChanged("Description");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> DistributorId {
+            get {
+                return this.DistributorIdField;
+            }
+            set {
+                if ((this.DistributorIdField.Equals(value) != true)) {
+                    this.DistributorIdField = value;
+                    this.RaisePropertyChanged("DistributorId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DistributorName {
+            get {
+                return this.DistributorNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DistributorNameField, value) != true)) {
+                    this.DistributorNameField = value;
+                    this.RaisePropertyChanged("DistributorName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> Id {
             get {
                 return this.IdField;
             }
@@ -305,6 +375,19 @@ namespace GadgetHub.Web.GHServiceRef {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> IsActive {
+            get {
+                return this.IsActiveField;
+            }
+            set {
+                if ((this.IsActiveField.Equals(value) != true)) {
+                    this.IsActiveField = value;
+                    this.RaisePropertyChanged("IsActive");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string Name {
             get {
                 return this.NameField;
@@ -318,7 +401,7 @@ namespace GadgetHub.Web.GHServiceRef {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Price {
+        public System.Nullable<int> Price {
             get {
                 return this.PriceField;
             }
@@ -326,6 +409,19 @@ namespace GadgetHub.Web.GHServiceRef {
                 if ((this.PriceField.Equals(value) != true)) {
                     this.PriceField = value;
                     this.RaisePropertyChanged("Price");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> Stock {
+            get {
+                return this.StockField;
+            }
+            set {
+                if ((this.StockField.Equals(value) != true)) {
+                    this.StockField = value;
+                    this.RaisePropertyChanged("Stock");
                 }
             }
         }
@@ -748,6 +844,12 @@ namespace GadgetHub.Web.GHServiceRef {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/GetAllQuotations", ReplyAction="http://tempuri.org/IGadgetHubService/GetAllQuotationsResponse")]
         System.Threading.Tasks.Task<GadgetHub.Web.GHServiceRef.QuotationDTO[]> GetAllQuotationsAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/GetAllProducts", ReplyAction="http://tempuri.org/IGadgetHubService/GetAllProductsResponse")]
+        GadgetHub.Web.GHServiceRef.ProductDTO[] GetAllProducts(string searchTerm, int[] categoryIds, System.Nullable<int> isActive);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGadgetHubService/GetAllProducts", ReplyAction="http://tempuri.org/IGadgetHubService/GetAllProductsResponse")]
+        System.Threading.Tasks.Task<GadgetHub.Web.GHServiceRef.ProductDTO[]> GetAllProductsAsync(string searchTerm, int[] categoryIds, System.Nullable<int> isActive);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -879,6 +981,14 @@ namespace GadgetHub.Web.GHServiceRef {
         
         public System.Threading.Tasks.Task<GadgetHub.Web.GHServiceRef.QuotationDTO[]> GetAllQuotationsAsync() {
             return base.Channel.GetAllQuotationsAsync();
+        }
+        
+        public GadgetHub.Web.GHServiceRef.ProductDTO[] GetAllProducts(string searchTerm, int[] categoryIds, System.Nullable<int> isActive) {
+            return base.Channel.GetAllProducts(searchTerm, categoryIds, isActive);
+        }
+        
+        public System.Threading.Tasks.Task<GadgetHub.Web.GHServiceRef.ProductDTO[]> GetAllProductsAsync(string searchTerm, int[] categoryIds, System.Nullable<int> isActive) {
+            return base.Channel.GetAllProductsAsync(searchTerm, categoryIds, isActive);
         }
     }
 }
