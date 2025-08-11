@@ -5,37 +5,226 @@
 <head runat="server">
     <title>Gadget Hub - Home</title>
     <style>
-        .product-card { border: 1px solid #ccc; padding: 10px; cursor: pointer; }
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
-        header { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background: #f0f0f0; }
-        nav { width: 250px; padding: 20px; border-right: 1px solid #ddd; }
-        main { flex-grow: 1; padding: 20px; }
-        .layout { display: flex; min-height: 80vh; }
+        /* Reset & base */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f9fc;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
 
-        #searchBar { flex-grow: 1; display: flex; justify-content: center; }
-        #cartArea { display: flex; align-items: center; gap: 15px; }
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: #2980b9;
+            color: white;
+            box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-        .cart-icon { position: relative; cursor: pointer; }
+        #companyName {
+            font-weight: 700;
+            font-size: 1.8em;
+            letter-spacing: 1px;
+            user-select: none;
+        }
+
+        /* Search bar */
+        #searchBar {
+            flex-grow: 1;
+            max-width: 400px;
+            margin: 0 20px;
+            display: flex;
+            gap: 8px;
+        }
+        #searchBar input[type="text"] {
+            flex-grow: 1;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: none;
+            font-size: 14px;
+            outline: none;
+        }
+        #searchBar input[type="text"]::placeholder {
+            color: #a5c1e0;
+        }
+        #searchBar input[type="submit"],
+        #searchBar button, 
+        #searchBar asp\\:Button {
+            background-color: #1f5fa7;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        #searchBar input[type="submit"]:hover,
+        #searchBar button:hover,
+        #searchBar asp\\:Button:hover {
+            background-color: #3a7bd5;
+        }
+
+        /* Cart area */
+        #cartArea {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .cart-icon {
+            position: relative;
+            font-size: 1.5em;
+            cursor: pointer;
+            user-select: none;
+            transition: color 0.3s ease;
+        }
+        .cart-icon:hover {
+            color: #d1e7ff;
+        }
         .cart-count {
             position: absolute;
             top: -8px;
-            right: -8px;
-            background: red;
+            right: -10px;
+            background: #e74c3c;
             color: white;
             border-radius: 50%;
-            padding: 2px 6px;
+            padding: 3px 7px;
             font-size: 12px;
+            font-weight: 700;
+            box-shadow: 0 0 3px rgba(0,0,0,0.3);
         }
 
+        /* Buttons in cart area */
         .button-link {
-            background-color: #4CAF50;
+            background-color: #e67e22;
             color: white;
-            padding: 8px 16px;
+            padding: 8px 18px;
+            border-radius: 6px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
             text-decoration: none;
-            border-radius: 4px;
+            display: inline-block;
         }
         .button-link:hover {
-            cursor: pointer; 
+            background-color: #d35400;
+        }
+
+        /* Layout */
+        .layout {
+            display: flex;
+            min-height: calc(100vh - 72px); /* header height approx */
+            background-color: #f7f9fc;
+        }
+
+        nav {
+            width: 240px;
+            background: white;
+            padding: 25px 20px;
+            border-right: 1px solid #d6dbe5;
+            box-shadow: 2px 0 6px rgb(0 0 0 / 0.05);
+            border-radius: 0 8px 8px 0;
+        }
+        nav h3 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #2980b9;
+            font-weight: 700;
+            user-select: none;
+        }
+        nav div {
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+        nav input[type="checkbox"] {
+            margin-right: 8px;
+            transform: scale(1.1);
+            cursor: pointer;
+        }
+        nav button {
+            margin-top: 10px;
+            width: 100%;
+            padding: 10px;
+            background-color: #2980b9;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        nav button:hover {
+            background-color: #3a7bd5;
+        }
+
+        main {
+            flex-grow: 1;
+            padding: 30px 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 25px;
+            overflow-y: auto;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgb(41 128 185 / 0.15);
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgb(41 128 185 / 0.3);
+        }
+        .product-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: contain;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            user-select: none;
+        }
+        .product-card h4 {
+            margin: 0 0 10px 0;
+            color: #2980b9;
+            font-weight: 700;
+            font-size: 1.1em;
+            user-select: none;
+        }
+        .product-card p {
+            margin: 0 0 15px 0;
+            font-weight: 600;
+            color: #555;
+            user-select: none;
+        }
+
+        /* Add to cart button inside product card */
+        .product-card asp\\:Button, .product-card button {
+            background-color: #2980b9;
+            border: none;
+            color: white;
+            padding: 8px 0;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+        .product-card asp\\:Button:hover, .product-card button:hover {
+            background-color: #3a7bd5;
         }
     </style>
 </head>

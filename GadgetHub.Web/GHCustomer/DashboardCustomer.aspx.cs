@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GadgetHub.Web.GHServiceRef;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI;
@@ -71,5 +72,9 @@ namespace GadgetHub.Web.GHCustomer
             }
         }
 
+        protected void btnHome_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("HomePage.aspx");
+        }
     }
 }
